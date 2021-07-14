@@ -9,9 +9,9 @@ function Write-LogEntry {
     .NOTES
     Name       : Write-LogEntry
     Author     : Darren Hollinrake
-    Version    : 0.2
+    Version    : 1.0
     DateCreated: 2019-01-04
-    DateUpdated: 2019-08-21
+    DateUpdated: 2021-07-13
 
     2021-07-13
     Code refactoring
