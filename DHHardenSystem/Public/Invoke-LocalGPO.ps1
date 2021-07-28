@@ -23,7 +23,7 @@ function Invoke-LocalGPO {
 
     .PARAMETER DisableRemovableStorage
 
-    .PARAMETER DisableLogonInfo
+    .PARAMETER DisplayLogonInfo
 
     .PARAMETER IE11
     DISA GPO
@@ -65,7 +65,7 @@ function Invoke-LocalGPO {
         [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$DisableRemovableStorage,
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$DisableLogonInfo,
+        [switch]$DisplayLogonInfo,
         [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$IE11,
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -131,8 +131,8 @@ function Invoke-LocalGPO {
                 Write-Verbose "Applying GPO: DisableRemovableStorage"
             }
         }
-        DisableLogonInfo {
-            if ($PSCmdlet.ShouldProcess("DisableLogonInfo: $DisableLogonInfo", "Apply GPO")) {
+        DisplayLogonInfo {
+            if ($PSCmdlet.ShouldProcess("DisplayLogonInfo: $DisplayLogonInfo", "Apply GPO")) {
                 Write-Verbose "Applying GPO: Disable Logon Info"
             }
         }
