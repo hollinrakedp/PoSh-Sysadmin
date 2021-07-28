@@ -1,0 +1,6 @@
+﻿<PolicyRules>
+<UserConfig><Key>software\policies\microsoft\office\16.0\visio\security</Key><Value>requireaddinsig</Value><RegType>REG_DWORD</RegType><RegData>1</RegData><SourceFile>C:\Export\GPO\DoD\DoD Office System 2016 and Components\GPOs\{2340C16A-0765-4688-B87B-4745C82A4F7E}\DomainSysvol\GPO\User\registry.pol</SourceFile><PolicyName>DoD Visio 2016 STIG User v1r1</PolicyName></UserConfig>
+<UserConfig><Key>software\policies\microsoft\office\16.0\visio\security</Key><Value>notbpromptunsignedaddin</Value><RegType>REG_DWORD</RegType><RegData>1</RegData><SourceFile>C:\Export\GPO\DoD\DoD Office System 2016 and Components\GPOs\{2340C16A-0765-4688-B87B-4745C82A4F7E}\DomainSysvol\GPO\User\registry.pol</SourceFile><PolicyName>DoD Visio 2016 STIG User v1r1</PolicyName></UserConfig>
+<UserConfig><Key>software\policies\microsoft\office\16.0\visio\security</Key><Value>vbawarnings</Value><RegType>REG_DWORD</RegType><RegData>2</RegData><SourceFile>C:\Export\GPO\DoD\DoD Office System 2016 and Components\GPOs\{2340C16A-0765-4688-B87B-4745C82A4F7E}\DomainSysvol\GPO\User\registry.pol</SourceFile><PolicyName>DoD Visio 2016 STIG User v1r1</PolicyName></UserConfig>
+<CSE-User><GUID>{35378EAC-683F-11D2-A89A-00C04FBBCFA2}</GUID><Name>Registry Policy</Name></CSE-User>
+</PolicyRules>

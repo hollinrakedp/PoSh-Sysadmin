@@ -1,0 +1,4 @@
+﻿<PolicyRules>
+<ComputerConfig><Key>Software\Policies\Microsoft\OneDrive\AllowTenantList</Key><Value>1111-2222-3333-4444</Value><RegType>REG_SZ</RegType><RegData>1111-2222-3333-4444</RegData><SourceFile>C:\Export\GPO\DoD\DoD Office System 2016 and Components\GPOs\{301B97EC-A1C0-473F-ABF2-8B64725E3E11}\DomainSysvol\GPO\Machine\registry.pol</SourceFile><PolicyName>DoD OneDrive for Business 2016 STIG Computer v2r1</PolicyName></ComputerConfig>
+<CSE-Machine><GUID>{35378EAC-683F-11D2-A89A-00C04FBBCFA2}</GUID><Name>Registry Policy</Name></CSE-Machine>
+</PolicyRules>

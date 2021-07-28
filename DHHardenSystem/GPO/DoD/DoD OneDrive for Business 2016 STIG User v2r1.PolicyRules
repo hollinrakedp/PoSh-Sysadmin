@@ -1,0 +1,4 @@
+﻿<PolicyRules>
+<UserConfig><Key>SOFTWARE\Policies\Microsoft\OneDrive</Key><Value>DisablePersonalSync</Value><RegType>REG_DWORD</RegType><RegData>1</RegData><SourceFile>C:\Export\GPO\DoD\DoD Office System 2016 and Components\GPOs\{565195A1-8CB8-4A00-A74D-6CBB78A55CFB}\DomainSysvol\GPO\User\registry.pol</SourceFile><PolicyName>DoD OneDrive for Business 2016 STIG User v2r1</PolicyName></UserConfig>
+<CSE-User><GUID>{35378EAC-683F-11D2-A89A-00C04FBBCFA2}</GUID><Name>Registry Policy</Name></CSE-User>
+</PolicyRules>
