@@ -1,1 +1,0 @@
-Place x86 LGPO.exe in this folder
