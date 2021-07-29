@@ -198,7 +198,6 @@ function Invoke-LocalGPO {
             if ($PSCmdlet.ShouldProcess("Office: $Office", "Apply GPO")) {
                 Write-Verbose "Office was specified"
                 switch ($Office) {
-                    #Test for version of Office installer?
                     '2013' {
                         Write-Verbose "Applying GPO: Office2013"
                     }
@@ -223,7 +222,6 @@ function Invoke-LocalGPO {
             if ($PSCmdlet.ShouldProcess("OS: $OS", "Apply GPO")) {
                 Write-Verbose "OS was specified"
                 switch ($OS) {
-                    # Test for version?: Get-CIMInstance -ClassName Win32_OperatingSystem | select caption
                     Win10 {
                         Write-Verbose "Applying GPO: Win10"
                         & LGPO.exe /p '.\GPO\DoD\DoD Windows 10 STIG Computer v2r2.PolicyRules' /v > { $env:COMPUTERNAME }_lgpo.log 2> { $env:COMPUTERNAME }_lgpo.err
