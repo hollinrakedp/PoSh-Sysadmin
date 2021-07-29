@@ -18,6 +18,10 @@ function Invoke-LocalGPO {
     Date Created - 2021-07-24
     Date Updated - 
 
+    TODO
+    ----
+    Add remaining Custom GPOs and corresponding help.
+
     .PARAMETER AdminCDRW
 
     .PARAMETER AdminRemDriveRW
