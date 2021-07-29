@@ -68,16 +68,16 @@ function Invoke-HardenSystem {
         DisablePoShV2 {
             if ($PSCmdlet.ShouldProcess("localhost", "Disable-PoShV2")) {
                 Write-Verbose "Option Selected: DisablePoshV2"
-                # Disable-PoShV2 -WhatIf:$WhatIfPreference
+                Disable-PoShV2 -WhatIf:$WhatIfPreference
             }
         }
         DisableScheduledTask {
             Write-Verbose "Option Selected: DisableScheduledTasks"
-            # Set-ScheduledTaskDisabled -WhatIf:$WhatIfPreference
+            Set-ScheduledTaskDisabled -WhatIf:$WhatIfPreference
         }
         DisableService {
             Write-Verbose "Option Selected: DisableServices"
-            # Set-ServicesDisabled -WhatIf:$WhatIfPreference
+            Set-ServicesDisabled -WhatIf:$WhatIfPreference
         }
         EnableLog {
             Write-Verbose "Option Selected: EnableLog"
