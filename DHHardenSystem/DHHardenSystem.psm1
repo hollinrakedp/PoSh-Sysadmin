@@ -22,6 +22,7 @@ if (!($EnvPath -contains "$LGPOPath")) {
 #region Tab Completion
 $MitigationTabComplete = {Get-ChildItem -Path $(Join-Path "$($(Get-Module $($(Get-Command Invoke-HardenSystem).Source)).ModuleBase)" -ChildPath "Mitigations") -File | Select-Object -ExpandProperty BaseName}
 Register-ArgumentCompleter -CommandName Invoke-HardenSystem -ParameterName Mitigation -ScriptBlock $MitigationTabComplete
+Register-ArgumentCompleter -CommandName Export-HardenSystemConfig -ParameterName Mitigation -ScriptBlock $MitigationTabComplete
 #endregion Tab Completion
 
 Export-ModuleMember -Function $Public.Basename
