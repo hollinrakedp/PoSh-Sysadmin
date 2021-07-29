@@ -1,12 +1,22 @@
 function Invoke-LocalGPO {
     <#
     .SYNOPSIS
-    Applies GPOs against the local system.
+    Applies GPOs against the local system. The settings applied can be seen with the local group policy console (gpedit.msc).
 
     .DESCRIPTION
+    The 'Invoke-LocalGPO' function applies GPO's against the local system. Many of the GPO's provided follow the DISA STIG GPO's and are labeled as 'DISA GPO' in the parameter help. The additional Non-DISA GPO's provided are to configure some common settings or applied against Multi-User Stand Alone (MUSA) system. GPO's are imported using Microsoft's LGPO tool (LGPO.exe). The GPO's have been converted to '*.policyrules' text-based files.
 
+    For the GPO's that configure applications, they will apply whether the application is currently installed or not. For the OS parameter, no check is made to ensure the GPO applied matches the installed OS.
+
+    Note: If the system is/will be joined to a domain, these local GPO's will not be processed if the following GPO setting is enabled:
+        Computer Configuration > Administrative Templates > System > Group Policy: Turn off Local Group Policy objects processing
 
     .NOTES
+    Name         - Invoke-LocalGPO
+    Version      - 0.2
+    Author       - Darren Hollinrake
+    Date Created - 2021-07-24
+    Date Updated - 
 
     .PARAMETER AdminCDRW
 
@@ -15,36 +25,42 @@ function Invoke-LocalGPO {
     .PARAMETER NonAdminCDRead
 
     .PARAMETER AppLocker
+    Custom - Configures AppLocker with a custom policy that allows users to run any Microsoft-signed programs AND any programs in the Program Files directories. Administrators can run anything. Valid values are 'Audit' and 'Enforce'.
 
     .PARAMETER Defender
-    DISA GPO
+    DISA STIG (v2r2) - Configures Windows Defender AV in alignment with the corresponding DISA STIG. This applies Computer settings.
 
     .PARAMETER DisableCortana
 
     .PARAMETER DisableRemovableStorage
 
     .PARAMETER DisplayLogonInfo
+    Custom - After a user logs in successfully, displays the previous logon information (Last Logon Date, Faild logon attempts) 
 
     .PARAMETER IE11
-    DISA GPO
+    DISA STIG (v1r19) - Configures IE11 in alignment with the corresponding DISA STIG. This applies both User and Computer settings.
 
     .PARAMETER Firewall
-    DISA GPO
+    DISA GPO (v1r7) - Configures the Windows firewall in alignment with the corresponding DISA STIG. This applies Computer settings.
 
     .PARAMETER NetBanner
+    Configures the Microsoft NetBanner application. Valid values are 'FOUO', 'Secret', 'SecretNoForn', 'TopSecret', 'Unclass', and 'Test'.
 
     .PARAMETER NoPreviousUser
+    Custom - Does not display the currently logged on user on the lock screen.
 
     .PARAMETER Office
-    DISA GPO
+    DISA GPO - Configures MS Office using the specified Office STIG. Valid values are '2013', '2016', and '2019'
 
     .PARAMETER RequireCtrlAltDel
+    Custom - Configures the requirement for the user to press Ctrl + Alt + Del on the lock screen to bring up the login prompt.
 
     .PARAMETER OS
-    DISA GPO
+    DISA GPO (Win10 v2r2)(Server2016 v2r2)(Server2019 v2r2) - Configures the OS using the specified OS STIG. Valid values are 'Win10', 'Server2016', and 'Server2019'.
+    
 
     .EXAMPLE
-    Invoke-LocalGPO
+    Invoke-LocalGPO -OS Win10
 
     #>
     [CmdletBinding(ConfirmImpact = 'High', SupportsShouldProcess)]
