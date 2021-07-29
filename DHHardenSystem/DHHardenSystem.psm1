@@ -12,4 +12,10 @@ Foreach($script in @($Public + $Private)) {
     }
 }
 
+$LGPOPath = "$PSScriptRoot\LGPO"
+$EnvPath = $Env:Path -split ';'
+if (!($EnvPath -contains "$LGPOPath")) {
+    $Env:Path += ";$LGPOPath"
+}
+
 Export-ModuleMember -Function $Public.Basename
