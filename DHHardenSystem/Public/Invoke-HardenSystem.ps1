@@ -14,18 +14,25 @@ function Invoke-HardenSystem {
     Date Updated - 
 
     .PARAMETER ApplyGPO
+    Applies settings against the Local Group Policy. See 'Invoke-LocalGPO' for additional information on the parameters that can be called.
 
     .PARAMETER DEP
+    Configures the Data Execution Prevention policy. Valid values are 'OptIn', 'OptOut', 'AlwaysOn', 'AlwaysOff'.
 
     .PARAMETER DisablePoShV2
+    Remove the Windows Feature PowerShell v2 if it is installed.
 
     .PARAMETER DisableScheduledTask
+    Disables a preset list of scheduled tasks that are unnecessary in most use cases.
 
     .PARAMETER DisableService
+    Disables a preset list of services that are unnecessary in most use cases.
 
     .PARAMETER EnableLog
+    Enables the Windows event log for each log name provided.
 
     .PARAMETER Mitigation
+    Enables the mitigation for the specified items.
 
     .EXAMPLE
 
