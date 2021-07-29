@@ -86,6 +86,7 @@ function Invoke-HardenSystem {
             foreach ($Mitigate in $Mitigation) {
                 if ($PSCmdlet.ShouldProcess("$Mitigate", "Mitigate")) {
                     Write-Verbose "Enabling Mitigation: $Mitigate"
+                    & $Mitigate
                 }
             }
         }
