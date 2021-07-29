@@ -148,7 +148,7 @@ function Invoke-LocalGPO {
         Defender {
             if ($PSCmdlet.ShouldProcess("Defender: $Defender", "Apply GPO")) {
                 Write-Verbose "Applying GPO: Defender"
-                & LGPO.exe /p "$DoDGPOPath\DoD Windows Defender Antivirus STIG Computer v2r2.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
+                & LGPO.exe /p "$DoDGPOPath\Computer - STIG - DoD Windows Defender Antivirus v2r2.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
             }
         }
         DisableCortana {
@@ -175,14 +175,14 @@ function Invoke-LocalGPO {
         IE11 {
             if ($PSCmdlet.ShouldProcess("IE11: $IE11", "Apply GPO")) {
                 Write-Verbose "Applying GPO: IE11"
-                & LGPO.exe /p "$DoDGPOPath\DoD Internet Explorer 11 STIG Computer v1r19.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
-                & LGPO.exe /p "$DoDGPOPath\DoD Internet Explorer 11 STIG User v1r19.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
+                & LGPO.exe /p "$DoDGPOPath\Computer - STIG - DoD Internet Explorer 11 v1r19.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
+                & LGPO.exe /p "$DoDGPOPath\User - STIG - DoD Internet Explorer 11 v1r19.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
             }
         }
         Firewall {
             if ($PSCmdlet.ShouldProcess("Firewall: $Firewall", "Apply GPO")) {
                 Write-Verbose "Applying GPO: Firewall"
-                & LGPO.exe /p "$DoDGPOPath\DoD Windows Firewall STIG v1r7.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
+                & LGPO.exe /p "$DoDGPOPath\Computer - STIG - DoD Windows Firewall v1r7.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
             }
         }
         NetBanner {
@@ -231,8 +231,8 @@ function Invoke-LocalGPO {
                     }
                     '2016' {
                         Write-Verbose "Applying GPO: Office2016"
-                        & LGPO.exe /p "$DoDGPOPath\DoD Office 2016 Computer STIG COMBINED.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
-                        & LGPO.exe /p "$DoDGPOPath\DoD Office 2016 User STIG COMBINED.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
+                        & LGPO.exe /p "$DoDGPOPath\Computer - STIG - DoD Office 2016 - Combined.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
+                        & LGPO.exe /p "$DoDGPOPath\User - STIG - DoD Office 2016 - Combined" /v >> "$($env:COMPUTERNAME)_LGPO.log"
                     }
                     '2019' {
                         Write-Verbose "Applying GPO: Office 2019"
@@ -243,7 +243,7 @@ function Invoke-LocalGPO {
         RequireCtrlAltDel {
             if ($PSCmdlet.ShouldProcess("RequireCtrlAltDel: $RequireCtrlAltDel", "Apply GPO")) {
                 Write-Verbose "Applying GPO: RequireCtrlAltDel"
-                & LGPO.exe /p "$CustomGPOPath\Custom - Computer - Require Ctrl Alt Del.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
+                & LGPO.exe /p "$CustomGPOPath\Custom - Computer - SYS - Require Ctrl Alt Del.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
             } 
         }
         OS {
@@ -252,18 +252,18 @@ function Invoke-LocalGPO {
                 switch ($OS) {
                     Win10 {
                         Write-Verbose "Applying GPO: Win10"
-                        & LGPO.exe /p "$DoDGPOPath\DoD Windows 10 STIG Computer v2r2.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
-                        & LGPO.exe /p "$DoDGPOPath\DoD Windows 10 STIG User v2r2.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
+                        & LGPO.exe /p "$DoDGPOPath\Computer - STIG - DoD Windows 10 v2r2.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
+                        & LGPO.exe /p "$DoDGPOPath\User - STIG - DoD Windows 10 v2r2.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
                     }
                     Server2016 {
                         Write-Verbose "Applying GPO: MS Server 2016"
-                        & LGPO.exe /p "$DoDGPOPath\DoD Windows Server 2016 Member Server STIG Computer v2r2.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
-                        & LGPO.exe /p "$DoDGPOPath\DoD Windows Server 2016 Member Server STIG User v2r2.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
+                        & LGPO.exe /p "$DoDGPOPath\Computer - STIG - DoD Windows Server 2016 Member Server v2r2.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
+                        & LGPO.exe /p "$DoDGPOPath\User - STIG - DoD Windows Server 2016 Member Server v2r2.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
                     }
                     Server2019 {
                         Write-Verbose "Applying GPO: Server 2019"
-                        & LGPO.exe /p "$DoDGPOPath\DoD Windows Server 2019 Member Server STIG Computer v2r2.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
-                        & LGPO.exe /p "$DoDGPOPath\DoD Windows Server 2019 Member Server STIG User v2r2.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
+                        & LGPO.exe /p "$DoDGPOPath\Computer - STIG - DoD Windows Server 2019 Member Server v2r2.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
+                        & LGPO.exe /p "$DoDGPOPath\User - STIG - DoD Windows Server 2019 Member Server v2r2.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
                     }
                 }
             }
