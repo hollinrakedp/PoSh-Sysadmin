@@ -55,11 +55,9 @@ function Invoke-HardenSystem {
             $GPO = @{}
             ($ApplyGPO | ConvertTo-Json | ConvertFrom-Json).psobject.properties | ForEach-Object { $GPO[$_.Name] = $_.Value }
             $GPOString = $(foreach ($kvp in $GPO.GetEnumerator()) { $kvp.Key + ':' + $kvp.Value }) -join ', '
-            #            if ($PSCmdlet.ShouldProcess("$GPOString", "Invoke-LocalGPO")) {
             Write-Verbose "Option Selected: ApplyGPO"
             Write-Verbose "Passing GPOs: $GPOString"
             Invoke-LocalGPO @GPO -WhatIf:$WhatIfPreference
-            #            }
         }
         DEP {
             Write-Verbose "Option Selected: DEP"
