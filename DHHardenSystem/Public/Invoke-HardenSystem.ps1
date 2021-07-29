@@ -82,8 +82,6 @@ function Invoke-HardenSystem {
         EnableLog {
             Write-Verbose "Option Selected: EnableLog"
             Enable-EventLog -LogName $EnableLog -WhatIf:$WhatIfPreference
-            #Microsoft-Windows-PrintService/Operational
-            #Microsoft-Windows-TaskScheduler/Operational
         }
         Mitigation {
             Write-Verbose "Option Selected: Mitigation"
