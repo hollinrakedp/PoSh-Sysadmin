@@ -88,8 +88,6 @@ function Invoke-HardenSystem {
                     Write-Verbose "Enabling Mitigation: $Mitigate"
                 }
             }
-            # Call script/function
         }
-
     }
 }
