@@ -50,7 +50,7 @@ function Invoke-HardenSystem {
         [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$DisableScheduledTask,
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$DisableService,
+        [string[]]$DisableService,
         [Parameter(ValueFromPipelineByPropertyName)]
         [string[]]$EnableLog,
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -82,7 +82,7 @@ function Invoke-HardenSystem {
         }
         DisableService {
             Write-Verbose "Option Selected: DisableServices"
-            Set-ServiceDisabled -WhatIf:$WhatIfPreference
+            Set-ServiceDisabled -Name $DisableService -WhatIf:$WhatIfPreference
         }
         EnableLog {
             Write-Verbose "Option Selected: EnableLog"

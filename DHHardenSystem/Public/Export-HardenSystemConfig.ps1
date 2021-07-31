@@ -39,7 +39,7 @@ function Export-HardenSystemConfig {
         [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$DisableScheduledTask,
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$DisableService,
+        [string[]]$DisableService,
         [Parameter(ValueFromPipelineByPropertyName)]
         [string[]]$EnableLog,
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -56,7 +56,7 @@ function Export-HardenSystemConfig {
         DEP                  = $DEP
         DisablePoshV2        = $DisablePoshV2.IsPresent
         DisableScheduledTask = $DisableScheduledTask.IsPresent
-        DisableService       = $DisableService.IsPresent
+        DisableService       = $DisableService
         EnableLog            = $EnableLog
         Mitigation           = $Mitigation
     }
