@@ -82,7 +82,7 @@ function Invoke-HardenSystem {
         }
         DisableService {
             Write-Verbose "Option Selected: DisableServices"
-            Set-ServicesDisabled -WhatIf:$WhatIfPreference
+            Set-ServiceDisabled -WhatIf:$WhatIfPreference
         }
         EnableLog {
             Write-Verbose "Option Selected: EnableLog"
