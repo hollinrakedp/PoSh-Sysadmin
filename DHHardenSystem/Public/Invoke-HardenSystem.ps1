@@ -31,6 +31,9 @@ function Invoke-HardenSystem {
     .PARAMETER EnableLog
     Enables the Windows event log for each log name provided.
 
+    .PARAMETER LocalUserPasswordExpires
+    Enables password expiration for any local accounts that are enabled and do not have a password expiration.
+
     .PARAMETER Mitigation
     Enables the mitigation for the specified items.
 
@@ -53,6 +56,8 @@ function Invoke-HardenSystem {
         [string[]]$DisableService,
         [Parameter(ValueFromPipelineByPropertyName)]
         [string[]]$EnableLog,
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$LocalUserPasswordExpires,
         [Parameter(ValueFromPipelineByPropertyName)]
         [string[]]$Mitigation
     )
@@ -87,6 +92,10 @@ function Invoke-HardenSystem {
         EnableLog {
             Write-Verbose "Option Selected: EnableLog"
             Enable-EventLog -LogName $EnableLog -WhatIf:$WhatIfPreference
+        }
+        LocalUserPasswordExpires {
+            Write-Verbose "Option Selected: LocalUserPasswordExpires"
+            Set-LocalUserPasswordExpires
         }
         Mitigation {
             Write-Verbose "Option Selected: Mitigation"
