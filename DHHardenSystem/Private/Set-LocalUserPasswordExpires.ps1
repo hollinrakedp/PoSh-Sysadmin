@@ -1,5 +1,7 @@
 function Set-LocalUserPasswordExpires {
-    [CmdletBinding(ConfirmImpact = 'High', SupportsShouldProcess)]
+    [CmdletBinding(
+        ConfirmImpact = 'High',
+        SupportsShouldProcess)]
     param (
     )
     $Users = Get-LocalUser | Where-Object { ($_.Enabled -eq $true) -and ($null -eq $_.PasswordExpires) }
