@@ -26,6 +26,12 @@ function Export-HardenSystemConfig {
 
     The first line creates a hash table which is used in the subsequent command and passed as the value for the 'ApplyGPO' parameter. The second line sets all the parameters that are to be included in the output of the configuration file. The configuration file is saved to 'C:\Temp\Custom.json'.
     
+    .EXAMPLE
+    $ApplyGPO = @{OS = 'Win10'; Netbanner = 'Test'; Office = '2016'; Defender = $true ;AppLocker = 'Audit'}
+    $DisableService = 'ALG','AJRouter','BTAGService','bthserv','BthHFserv','DiagTrack','dmwappushservice','Fax','FrameServer','icssvc','lfsvc','lltdsvc','MapsBroker','MSiSCSI','NcbService','PhoneSvc','QWAVE','RetailDemo','RemoteAccess','RMSvc','SharedAccess','SSDPSRV','TapiSrv','WalletService','WFDSConMgrSvc','wlidsvc','WMPNetworkSvc','workfoldersvc','WpcMonSvc','xbgm','XblAuthmanager','XblGameSave','XboxGipSvc','XboxNetApiSvc'
+    Export-HardenSystemConfig -ApplyGPO $ApplyGPO -DEP OptOut -DisablePoshV2 -DisableScheduledTask -DisableService $DisableService -EnableLog "Microsoft-Windows-PrintService/Operational", "Microsoft-Windows-TaskScheduler/Operational" -Mitigation RC4,SpeculativeExecution,SSL3Server,TLS1Server,TripleDES -Path .\Default.json
+    This command is used to create the 'Default.json' file included with this module.
+
     #>
     [CmdletBinding(SupportsShouldProcess)]
     param (
