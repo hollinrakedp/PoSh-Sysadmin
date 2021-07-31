@@ -95,7 +95,7 @@ function Invoke-HardenSystem {
         }
         LocalUserPasswordExpires {
             Write-Verbose "Option Selected: LocalUserPasswordExpires"
-            Set-LocalUserPasswordExpires
+            Set-LocalUserPasswordExpires -WhatIf:$WhatIfPreference
         }
         Mitigation {
             Write-Verbose "Option Selected: Mitigation"
