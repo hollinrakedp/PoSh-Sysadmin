@@ -30,24 +30,12 @@
     param (
     )
     if ($PSCmdlet.ShouldProcess("localhost", "Disable-PoShV2")) {
-        ###############
-        #   Logging   #
-        ###############
-        $LogPath = "C:\Custom\Logs\"
-        If (!(Test-Path "$LogPath")) { New-Item -ItemType Directory -Force -Path "$LogPath" }
-        $scriptname = [io.path]::GetFileNameWithoutExtension("$($MyInvocation.MyCommand.Name)")
-        $TransactionLog = $LogPath + $(Get-Date -Format yyyyMMdd) + "_" + $scriptname + ".log"
-        Start-Transcript -LiteralPath $TransactionLog
-        ###############
-
-        If ((Get-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root).State -eq "Disabled") {
+        if ((Get-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root).State -eq "Disabled") {
             Write-Host "Feature is already removed. Nothing to do..."
         }
-        Else {
+        else {
             Write-Host "Removing Feature: $((Get-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root).DisplayName)"
             Disable-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2Root -Verbose
         }
-
-        Stop-Transcript
     }
 }
