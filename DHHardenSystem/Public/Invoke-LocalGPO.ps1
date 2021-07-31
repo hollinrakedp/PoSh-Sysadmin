@@ -232,7 +232,7 @@ function Invoke-LocalGPO {
                     '2016' {
                         Write-Verbose "Applying GPO: Office2016"
                         & LGPO.exe /p "$DoDGPOPath\Computer - STIG - DoD Office 2016 - Combined.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
-                        & LGPO.exe /p "$DoDGPOPath\User - STIG - DoD Office 2016 - Combined" /v >> "$($env:COMPUTERNAME)_LGPO.log"
+                        & LGPO.exe /p "$DoDGPOPath\User - STIG - DoD Office 2016 - Combined.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
                     }
                     '2019' {
                         Write-Verbose "Applying GPO: Office 2019"
