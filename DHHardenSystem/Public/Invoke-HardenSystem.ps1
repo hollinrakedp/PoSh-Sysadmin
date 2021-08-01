@@ -37,6 +37,9 @@ function Invoke-HardenSystem {
     .PARAMETER Mitigation
     Enables the mitigation for the specified items.
 
+    .PARAMETER RemoveWinApp
+    Removes a preset list of UWP Applications from the system.
+
     .EXAMPLE
 
 
@@ -59,7 +62,9 @@ function Invoke-HardenSystem {
         [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$LocalUserPasswordExpires,
         [Parameter(ValueFromPipelineByPropertyName)]
-        [string[]]$Mitigation
+        [string[]]$Mitigation,
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$RemoveWinApp
     )
 
     switch ($PSBoundParameters.Keys) {
@@ -105,6 +110,10 @@ function Invoke-HardenSystem {
                     & $Mitigate
                 }
             }
+        }
+        RemoveWinApp {
+            Write-Verbose "Option Selected: RemoveWinApp"
+            Remove-WinApp -WhatIf:$WhatIfPreference
         }
     }
 }
