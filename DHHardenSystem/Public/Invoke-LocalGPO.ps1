@@ -200,6 +200,8 @@ function Invoke-LocalGPO {
                     }
                     '2019' {
                         Write-Verbose "Applying GPO: Office 2019"
+                        & LGPO.exe /p "$DoDGPOPath\Computer - STIG - DoD Office 2019_365 v2r3.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
+                        & LGPO.exe /p "$DoDGPOPath\User - STIG - DoD Office 2019_365 v2r3" /v >> "$($env:COMPUTERNAME)_LGPO.log"
                     }
                 }
             }
