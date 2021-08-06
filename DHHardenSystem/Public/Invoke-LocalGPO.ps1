@@ -16,11 +16,11 @@ function Invoke-LocalGPO {
     Version      - 0.2
     Author       - Darren Hollinrake
     Date Created - 2021-07-24
-    Date Updated - 
+    Date Updated - 2021-08-06
 
     TODO
     ----
-    Add remaining Custom GPOs and corresponding help.
+    Add Exploit Protection Configuration file and reference it within the Win10 Computer GPO.
 
     .PARAMETER AppLocker
     Custom - Configures AppLocker with a custom policy that allows users to run any Microsoft-signed programs AND any programs in the Program Files directories. Administrators can run anything. Valid values are 'Audit' and 'Enforce'.
