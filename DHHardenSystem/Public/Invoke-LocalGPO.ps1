@@ -25,6 +25,9 @@ function Invoke-LocalGPO {
     .PARAMETER AppLocker
     Custom - Configures AppLocker with a custom policy that allows users to run any Microsoft-signed programs AND any programs in the Program Files directories. Administrators can run anything. Valid values are 'Audit' and 'Enforce'.
 
+    .PARAMETER Chrome
+    DISA STIG (v2r4) - Configures Google Chrome in alignment with the corresponding DISA STIG. This applies Computer settings.
+    
     .PARAMETER Defender
     DISA STIG (v2r2) - Configures Windows Defender AV in alignment with the corresponding DISA STIG. This applies Computer settings.
 
@@ -45,6 +48,9 @@ function Invoke-LocalGPO {
 
     .PARAMETER Office
     DISA GPO - Configures MS Office using the specified Office STIG. Valid values are '2016', and '2019'
+
+    .PARAMETER ReaderDC
+    DISA GPO (v2r1) Configures Reader DC (Continuous) in alignment with the corresponding DISA STIG. This applies both User and Computer settings.
 
     .PARAMETER RequireCtrlAltDel
     Custom - Configures the requirement for the user to press Ctrl + Alt + Del on the lock screen to bring up the login prompt.
