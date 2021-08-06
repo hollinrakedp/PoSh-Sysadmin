@@ -84,6 +84,8 @@ function Invoke-LocalGPO {
         [ValidateSet('2016', '2019')]
         [string]$Office,
         [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$ReaderDC,
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$RequireCtrlAltDel,
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('Win10', 'Server2016', 'Server2019')]
@@ -209,10 +211,17 @@ function Invoke-LocalGPO {
                     '2019' {
                         Write-Verbose "Applying GPO: Office 2019"
                         & LGPO.exe /p "$DoDGPOPath\Computer - STIG - DoD Office 2019_365 v2r3.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
-                        & LGPO.exe /p "$DoDGPOPath\User - STIG - DoD Office 2019_365 v2r3" /v >> "$($env:COMPUTERNAME)_LGPO.log"
+                        & LGPO.exe /p "$DoDGPOPath\User - STIG - DoD Office 2019_365 v2r3.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
                     }
                 }
             }
+        }
+        ReaderDC {
+            if ($PSCmdlet.ShouldProcess("ReaderDC: $ReaderDC", "Apply GPO")) {
+                Write-Verbose "Applying GPO: RequireCtrlAltDel"
+                & LGPO.exe /p "$CustomGPOPath\Computer - STIG - DoD Adobe Acrobat Reader DC Continuous v2r1.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
+                & LGPO.exe /p "$CustomGPOPath\User - STIG - DoD Adobe Acrobat Reader DC Continuous v2r1.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
+            } 
         }
         RequireCtrlAltDel {
             if ($PSCmdlet.ShouldProcess("RequireCtrlAltDel: $RequireCtrlAltDel", "Apply GPO")) {
