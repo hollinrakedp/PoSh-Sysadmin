@@ -22,21 +22,11 @@ function Invoke-LocalGPO {
     ----
     Add remaining Custom GPOs and corresponding help.
 
-    .PARAMETER AdminCDRW
-
-    .PARAMETER AdminRemDriveRW
-
-    .PARAMETER NonAdminCDRead
-
     .PARAMETER AppLocker
     Custom - Configures AppLocker with a custom policy that allows users to run any Microsoft-signed programs AND any programs in the Program Files directories. Administrators can run anything. Valid values are 'Audit' and 'Enforce'.
 
     .PARAMETER Defender
     DISA STIG (v2r2) - Configures Windows Defender AV in alignment with the corresponding DISA STIG. This applies Computer settings.
-
-    .PARAMETER DisableCortana
-
-    .PARAMETER DisableRemovableStorage
 
     .PARAMETER DisplayLogonInfo
     Custom - After a user logs in successfully, displays the previous logon information (Last Logon Date, Faild logon attempts) 
@@ -54,7 +44,7 @@ function Invoke-LocalGPO {
     Custom - Does not display the currently logged on user on the lock screen.
 
     .PARAMETER Office
-    DISA GPO - Configures MS Office using the specified Office STIG. Valid values are '2013', '2016', and '2019'
+    DISA GPO - Configures MS Office using the specified Office STIG. Valid values are '2016', and '2019'
 
     .PARAMETER RequireCtrlAltDel
     Custom - Configures the requirement for the user to press Ctrl + Alt + Del on the lock screen to bring up the login prompt.
@@ -70,20 +60,12 @@ function Invoke-LocalGPO {
     [CmdletBinding(ConfirmImpact = 'High', SupportsShouldProcess)]
     param (
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$AdminCDRW,
-        [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$AdminRemDriveRW,
-        [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$NonAdminCDRead,
-        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('Audit', 'Enforce')]
         [string]$AppLocker,
         [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Defender,
         [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$DisableCortana,
-        [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$DisableRemovableStorage,
         [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$DisplayLogonInfo,
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -97,7 +79,7 @@ function Invoke-LocalGPO {
         [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$NoPreviousUser,
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('2013', '2016', '2019')]
+        [ValidateSet('2016', '2019')]
         [string]$Office,
         [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$RequireCtrlAltDel,
@@ -115,21 +97,6 @@ function Invoke-LocalGPO {
     $DoDGPOPath = Join-Path -Path $ModulePath -ChildPath "GPO\DoD"
 
     switch ($PSBoundParameters.Keys) {
-        AdminCDRW {
-            if ($PSCmdlet.ShouldProcess("AdminCDRW: $AdminCDRW", "Apply GPO")) {
-                Write-Verbose "Applying GPO: AdminCDRW"
-            } 
-        }
-        AdminRemDriveRW {
-            if ($PSCmdlet.ShouldProcess("AdminRemDriveRW: $AdminRemDriveRW", "Apply GPO")) {
-                Write-Verbose "Applying GPO: AdminRemDriveRW"
-            }
-        }
-        NonAdminCDRead {
-            if ($PSCmdlet.ShouldProcess("NonAdminCDRead: $NonAdminCDRead", "Apply GPO")) {
-                Write-Verbose "Applying GPO: NonAdminCDRead"
-            }
-        }
         Applocker {
             if ($PSCmdlet.ShouldProcess("AppLocker: $AppLocker", "Apply GPO")) {
                 Write-Verbose "Applocker was specified"
@@ -226,9 +193,6 @@ function Invoke-LocalGPO {
             if ($PSCmdlet.ShouldProcess("Office: $Office", "Apply GPO")) {
                 Write-Verbose "Office was specified"
                 switch ($Office) {
-                    '2013' {
-                        Write-Verbose "Applying GPO: Office2013"
-                    }
                     '2016' {
                         Write-Verbose "Applying GPO: Office2016"
                         & LGPO.exe /p "$DoDGPOPath\Computer - STIG - DoD Office 2016 - Combined.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
