@@ -70,8 +70,10 @@ function Invoke-LocalGPO {
     Custom - Configures the requirement for the user to press Ctrl + Alt + Del on the lock screen to bring up the login prompt.
 
     .PARAMETER OS
-    DISA GPO (Win10 v2r2)(Server2016 v2r2)(Server2019 v2r2) - Configures the OS using the specified OS STIG. Valid values are 'Win10', 'Server2016', and 'Server2019'.
-    
+    DISA GPO - Configures the OS using the specified OS STIG. Valid values are 'Win10', 'Server2016', and 'Server2019'.
+        Windows 10 - v2r2
+        Server 2016 - v2r2
+        Server 2019 - v2r2
 
     .EXAMPLE
     Invoke-LocalGPO -OS Win10
