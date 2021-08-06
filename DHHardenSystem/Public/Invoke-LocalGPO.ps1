@@ -47,7 +47,21 @@ function Invoke-LocalGPO {
     Custom - Does not display the currently logged on user on the lock screen.
 
     .PARAMETER Office
-    DISA GPO - Configures MS Office using the specified Office STIG. Valid values are '2016', and '2019'
+    DISA GPO - Configures MS Office using the specified Office STIG. Valid values are '2016', and '2019'. This applies both User and Computer settings.
+    For Office 2016, the following STIGs are applied:
+        Computer - Skype for Business 2016 - v1r1
+        Computer - OneDrive for Business 2016 - v2r1
+        Computer - Office System 2016 - v2r1
+        User - Access 2016 - v1r1
+        User - Excel 2016 - v1r2
+        User - Office System 2016 - v2r1
+        User - OneDrive for Business - v2r1
+        User - Outlook 2016 - v2r1
+        User - PowerPoint 2016 - v1r1
+        User - Project 2016 - v1r1
+        User - Publisher 2016 - v1r3
+        User - Visio 2016 - v1r1
+        User - Word 2016 - v1r1
 
     .PARAMETER ReaderDC
     DISA GPO (v2r1) Configures Reader DC (Continuous) in alignment with the corresponding DISA STIG. This applies both User and Computer settings.
