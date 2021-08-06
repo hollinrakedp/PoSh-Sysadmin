@@ -63,6 +63,8 @@ function Invoke-LocalGPO {
         [ValidateSet('Audit', 'Enforce')]
         [string]$AppLocker,
         [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$Chrome,
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Defender,
         [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$DisableCortana,
@@ -110,6 +112,12 @@ function Invoke-LocalGPO {
                         & LGPO.exe /p "$CustomGPOPath\Custom - Computer - App - Config - AppLocker - Enforce.PolicyRules" /v >> "$($env:COMPUTERNAME)_LGPO.log"
                     }
                 }
+            }
+        }
+        Chrome {
+            if ($PSCmdlet.ShouldProcess("Chrome: $Chrome", "Apply GPO")) {
+                Write-Verbose "Applying GPO: Chrome"
+                & LGPO.exe /p "$DoDGPOPath\Computer - STIG - DoD Google Chrome v2r4" /v >> "$($env:COMPUTERNAME)_LGPO.log"
             }
         }
         Defender {
