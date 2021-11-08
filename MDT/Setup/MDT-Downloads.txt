@@ -1,0 +1,9 @@
+MDT Download
+https://aka.ms/mdtdownload
+
+ADK Download
+https://docs.microsoft.com/en-us/windows-hardware/get-started/adk-install
+https://go.microsoft.com/fwlink/?linkid=2026036
+
+ADK WinPE Add-on
+https://go.microsoft.com/fwlink/?linkid=2022233

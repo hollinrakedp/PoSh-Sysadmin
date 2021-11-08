@@ -1,0 +1,189 @@
+Download the latest MDT, ADK, and WinPE Add-on (Links in Downloads.txt)
+
+With the files download, we need to run the following commands on the connected system to allow installation on an offline system.
+
+# Download files for offline use
+.\adksetup.exe /quiet /ceip off /layout "G:\Write-up\MDT\Downloads\ADK 1903\adkoffline"
+.\adkwinpesetup.exe /ceip off /layout "G:\Write-up\MDT\Downloads\ADK 1903\winpeoffline"
+
+# Downloads will be ~4GB total. Copy both the 'adkoffline' and 'winpeoffline' to the offline system.
+
+
+# Get the list of features that can be installed (May be needed for newer versions than used in this walkthrough)
+adksetup.exe /list
+
+## Install Windows Server and configure the basics (hostname, ip, domain, etc)
+
+# Run the MDT msi installer. The default options should be fine.
+MicrosoftDeploymentToolkit_x64.msi
+
+# Run the following on the offline system
+adksetup.exe /quiet /features OptionId.DeploymentTools OptionId.ImagingAndConfigurationDesigner OptionId.ICDConfigurationDesigner OptionId.UserStateMigrationTool
+
+# Install the WinPE add-on
+# Run the following on the offline system
+adkwinpesetup.exe /quiet /features OptionId.WindowsPreinstallationEnvironment
+
+# Open Deployment Workbench
+# Right-click on 'Deployment Shares', Select 'New Deployment Share'
+# Set the path: D:\NASA-Build
+# Next
+# Share Name: NASA-Build$
+# Next
+# Deployment share description: NASA Build Share
+# Next
+# Options: (default)
+# Next
+# Next
+# Finish
+# (NewDP-NASABuild.ps1 script does the same as above)
+
+
+
+# Change the share permissions (PowerShell)
+$DeploymentShareNTFS = "D:\NASA-Build"
+icacls $DeploymentShareNTFS /grant '"DOMAINNAME\DOMAIN_MDT_USER":(OI)(CI)(RX)'
+icacls $DeploymentShareNTFS /grant '"Administrators":(OI)(CI)(F)'
+icacls $DeploymentShareNTFS /grant '"SYSTEM":(OI)(CI)(F)'
+icacls "$DeploymentShareNTFS\Captures" /grant '"DOMAINNAME\DOMAIN_MDT_USER":(OI)(CI)(M)'
+$DeploymentShare = "NASA-Build$"
+Grant-SmbShareAccess -Name $DeploymentShare -AccountName "EVERYONE" -AccessRight Change -Force
+
+# In Deployment Workbench
+# Expand 'Deployments Shares' -> 'NASA Build Share'
+# Select the 'Operating Systems' node
+# Under 'Action' -> 'New Folder'
+# Folder Name: Windows 10
+# Folder Description: Windows 10
+# Finish
+# (NewFolder-Windows10.ps1 script does the same as above)
+
+# Open the 'Windows 10' folder
+# Under 'Actions', Select 'Import Operating System'
+# Full set of source files -> Next
+# Source Directory: Point to the Win10 installation source files (Read from DVD, mount iso, extracted folder with disc contents) -> Next
+# Destination Directory Name: Win10x64v1809 -> Next
+# Next
+# Finish
+# (ImportOS-Win10x64v1809.ps1 script does the same as above)
+
+# Delete unnecessary OS versions (Pro, Edu, etc) (Optional)
+# DeleteOS-Win10x64v1809.ps1
+
+# Rename remaining OS (Optional)
+# Select the item to rename and click 'Rename' (Make sure you do the bottom section showing the items current name and not the folder name)
+# Name: Windows 10 Enterprise x64 v1809
+
+
+# Add applications
+
+
+# Create/Configure MDT Task Sequence
+# Expand 'Deployments Shares' -> 'NASA Build Share'
+# Select the 'Task Sequences' node
+# Under 'Actions', Select 'New Task Sequence'
+# Task Sequence ID: REF-W10X64-1809
+# Task Sequence Name: Windows 10 Enterprise x64 v1809
+# Task Sequence Comments: Windows 10 Enterprise x64 v1809 Reference Build
+# Next
+# Template: Standard Client Task Sequence
+# Next
+# Operating System: Windows 10 Enterprise x64 v1809
+# Next
+# Do not specify a product key at this time
+# Next
+# Full Name: NASA
+# Organization: NASA
+# IE Home Page: (default)
+# Next
+# Do not specify an Administrator password at this time
+# Next
+# Next
+# Finish
+# (ImportTaskSequence-REF-W10X64-1809.ps1 does the same as above)
+
+
+# Edit the Task Sequence
+
+
+
+
+# Configure Deployment Share
+# Expand 'Deployments Shares'
+# Right-click on 'NASA Build Share' -> 'Properties'
+# Select the 'rules' tab and past the following text
+# CustomSettings.ini
+[Settings]
+Priority=Default
+
+[Default]
+_SMSTSORGNAME=NASA
+UserDataLocation=NONE
+ComputerBackupLocation=NETWORK
+DoCapture=YES
+OSInstall=Y
+AdminPassword=P@ssw0rd!!
+TimeZoneName=Central Standard Time
+JoinWorkgroup=WORKGROUP
+HideShell=NO
+FinishAction=SHUTDOWN
+WSUSServer=http://wsus:8530
+ApplyGPOPack=NO
+
+BackupShare=\\MDT01\NASA-Build$
+BackupDir=Captures
+BackupFile=%TaskSequenceID%_#year(date) & "-" & month(date) & "-" & day(date)#.wim
+
+SkipAdminPassword=YES
+SkipProductKey=YES
+SkipComputerName=YES
+SkipDomainMembership=YES
+SkipUserData=YES
+SkipLocaleSelection=YES
+SkipTaskSequence=NO
+SkipTimeZone=YES
+SkipApplications=YES
+SkipBitLocker=YES
+SkipSummary=YES
+SkipRoles=YES
+SkipCapture=NO
+SkipFinalSummary=YES
+
+# On the rules tab, click 'Edit Bootstrap.ini'
+# Paste the following text into the file and save
+# Bootstrap.ini
+[Settings]
+Priority=Default
+
+[Default]
+DeployRoot=\\MDT01\NASA-Build$
+UserDomain=MDT01
+UserID=MDT
+UserPassword=1qaz2wsx!QAZ@WSX
+SkipBDDWelcome=YES
+
+
+# Configure Windows PE
+# Expand 'Deployments Shares'
+# Right-click on 'NASA Build Share' -> 'Properties'
+# Select the 'Windows PE' tab
+# Under the 'General' tab
+# Platform: x86
+# Image Description: NASA MDT Build x86
+# ISO file name: NASA MDT Build x86.iso
+# Under the 'Features' tab
+# Ensure 'DISM cmdlets' and 'Windows PowerShell' are checked
+# Under the 'Drivers and Patches' tab
+# Selection Profile: Nothing
+# Include all drivers from the selection profile
+# Repeat with Platform 'x64' selected
+# Click 'OK' to close the dialog box
+
+# Complete the deployment share update by right-clicking on the deployment share and selecting 'Update deployment share'
+# Optimize the boot image updating process -> Next
+# Next (Process may take some time to complete)
+# Finish
+# The iso files that were created are located in the 'D:\NASA-Build\Boot' directory
+
+
+
