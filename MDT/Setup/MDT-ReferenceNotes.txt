@@ -76,4 +76,8 @@ https://docs.microsoft.com/en-us/sccm/mdt/
 Walkthrough
 https://deploymentresearch.com/Research/Post/1676/Building-a-Windows-10-v1809-reference-image-using-Microsoft-Deployment-Toolkit-MDT
 
+Run a PowerShell script as a application
+powershell.exe -ExecutionPolicy Bypass -NoProfile -File ".\installscript.ps1"
 
+Run a PowerShell script as a task
+PowerShell script: %SCRIPTROOT%\Path\To\Script.ps1
