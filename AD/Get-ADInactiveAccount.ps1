@@ -1,4 +1,4 @@
-#Requires -modules ActiveDirectory, Write-LogEntry
+#Requires -modules ActiveDirectory, DHLog
 function Get-ADInactiveAccount {
     <#
     .SYNOPSIS
@@ -10,9 +10,9 @@ function Get-ADInactiveAccount {
     .NOTES   
     Name       : Get-InactiveAccount
     Author     : Darren Hollinrake
-    Version    : 1.0
+    Version    : 1.1
     DateCreated: 2019-01-03
-    DateUpdated: 
+    DateUpdated: 2021-10-14
 
     .PARAMETER Days
     The number of days before an accoutn is considered inactive
@@ -52,29 +52,30 @@ function Get-ADInactiveAccount {
         [switch]$NeverLoggedIn
     )
     
-    # Write the name of the function being called
-    Write-LogEntry $MyInvocation.MyCommand.Name
-    Write-LogEntry "The Parameter set in use: $($PSCmdlet.ParameterSetName)"
-    Write-LogEntry "Getting accounts that are inactive for $Days days."
+    Write-LogEntry -StartLog
+    Write-Verbose "The Parameter set in use: $($PSCmdlet.ParameterSetName)"
+    Write-LogEntry "Getting AD accounts that are inactive for $Days days or greater."
 
-    If ($($PSCmdlet.ParameterSetName) -eq "Inactive"){
-        $Accounts = Search-ADAccount -AccountInactive -UsersOnly -DateTime ((Get-Date).AddDays(-$Days)) | Where-Object {($_.Enabled -eq $true) -and ($_.PasswordNeverExpires -eq $false)}
+    If ($($PSCmdlet.ParameterSetName) -eq "Inactive") {
+        $Accounts = Search-ADAccount -AccountInactive -UsersOnly -DateTime ((Get-Date).AddDays(-$Days)) | Where-Object { ($_.Enabled -eq $true) -and ($_.PasswordNeverExpires -eq $false) }
     }
 
-    If ($($PSCmdlet.ParameterSetName) -eq "NeverLoggedIn"){
-        $Accounts = Search-ADAccount -AccountInactive -UsersOnly -DateTime ((Get-Date).AddDays(-$Days)) | Where-Object {($_.Enabled -eq $true) -and ($_.PasswordNeverExpires -eq $false) -and ($null -eq $_.LastLogonDate)} | Get-ADUser -Properties whencreated | Where-Object {$_.whencreated -lt ((Get-Date).AddDays(-$days))}
+    If ($($PSCmdlet.ParameterSetName) -eq "NeverLoggedIn") {
+        $Accounts = Search-ADAccount -AccountInactive -UsersOnly -DateTime ((Get-Date).AddDays(-$Days)) | Where-Object { ($_.Enabled -eq $true) -and ($_.PasswordNeverExpires -eq $false) -and ($null -eq $_.LastLogonDate) } | Get-ADUser -Properties whencreated | Where-Object { $_.whencreated -lt ((Get-Date).AddDays(-$days)) }
     }
 
     If ($Disable) {
         Write-LogEntry "Disabling accounts inactive for at least $Days days."
         $Accounts | Disable-ADAccount -PassThru | ForEach-Object -Process {
-            Write-LogEntry "Disabled $($_.Name) ($($_.SamAccountName))"
+            Write-LogEntry "Disabled $($_.Name) - ($($_.SamAccountName))"
             $CurrentDescription = (Get-ADUser $_.SamAccountName -Properties Description | Select-Object Description).Description
             $AddDescription = " - Disabled $(Get-Date -Format yyyyMMdd) - Inactive >$days days"
-            $UpdatedDescription = "$CurrentDescription" + "$AddDescription"
-            $_ | Set-ADUser -Description "$UpdatedDescription"
+            $NewDescription = "$CurrentDescription" + "$AddDescription"
+            $_ | Set-ADUser -Description "$NewDescription"
         }
-    } Else {
+    }
+    Else {
         $Accounts | Select-Object Name, SamAccountName, DistinguishedName
     }
+    Write-LogEntry -StopLog
 }
