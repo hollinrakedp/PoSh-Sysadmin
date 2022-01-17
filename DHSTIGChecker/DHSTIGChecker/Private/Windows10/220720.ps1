@@ -16,3 +16,12 @@ Run "Services.msc".
 If "Simple TCP/IP Services" is listed, this is a finding.
 
 #>
+$Services = @()
+$Services += Get-Service -Name "simptcp"
+
+if ($Service.Count -ne 0) {
+    $false
+}
+else {
+    $true
+}

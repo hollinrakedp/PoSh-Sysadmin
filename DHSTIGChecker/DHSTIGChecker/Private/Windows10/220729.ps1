@@ -28,3 +28,12 @@ Select "Turn Windows features on or off".
 If "SMB 1.0/CIFS File Sharing Support" is selected, this is a finding.
 
 #>
+
+$Features = Get-WindowsOptionalFeature -Online -FeatureName "SMB1Protocol"
+
+if ($Features.State -contains 'Enabled') {
+    $false
+}
+else {
+    $true
+}

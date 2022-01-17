@@ -16,3 +16,12 @@ Navigate to the Windows\System32 directory.
 If the "TFTP" application exists, this is a finding.
 
 #>
+
+$Features = Get-WindowsOptionalFeature -Online -FeatureName "TFTP"
+
+if ($Features.State -contains 'Enabled') {
+    $false
+}
+else {
+    $true
+}

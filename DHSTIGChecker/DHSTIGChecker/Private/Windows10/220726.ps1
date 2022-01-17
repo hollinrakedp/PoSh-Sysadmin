@@ -16,3 +16,11 @@ If the value for "nx" is not "OptOut", this is a finding.
 (The more restrictive configuration of "AlwaysOn" would not be a finding.)
 
 #>
+
+$DEP = Get-DEP
+
+switch ($DEP) {
+    OptOut { $true }
+    AlwaysOn { $true }
+    Default { $false }
+}

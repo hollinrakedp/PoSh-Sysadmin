@@ -14,3 +14,10 @@ This is NA if the system does not have Bluetooth.
 Verify the organization has a policy to turn off Bluetooth when not in use and personnel are trained. If it does not, this is a finding.
 
 #>
+
+if ($HasBluetooth) {
+    "Not Reviewed"
+}
+else {
+    "Not Applicable"
+}

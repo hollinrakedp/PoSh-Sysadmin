@@ -25,6 +25,10 @@ Value: 0x00000001 (1)
 
 #>
 
+if ($Script:ComputerInfo.WindowsVersion -lt 1709) {
+    return 'Not Applicable'
+}
+
 $Params = @{
     Path = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection\"
     Name = "LimitEnhancedDiagnosticDataWindowsAnalytics"

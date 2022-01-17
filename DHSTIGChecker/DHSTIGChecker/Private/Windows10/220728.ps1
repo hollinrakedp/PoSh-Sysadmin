@@ -29,3 +29,12 @@ Select "Turn Windows features on or off".
 If "Windows PowerShell 2.0" (whether the subcategory of "Windows PowerShell 2.0 Engine" is selected or not) is selected, this is a finding.
 
 #>
+
+$PowerShellv2 = Get-WindowsOptionalFeature -Online | Where-Object {$_.FeatureName -like "*PowerShellv2*"}
+
+if ($PowerShellv2.State -contains 'Enabled') {
+    $false
+}
+else {
+    $true
+}

@@ -19,3 +19,12 @@ If the entries for "Internet Information Services" or "Internet Information Serv
 If an application requires IIS or a subset to be installed to function, this needs be documented with the ISSO.  In addition, any applicable requirements from the IIS STIG must be addressed.
 
 #>
+
+$Features = Get-WindowsOptionalFeature -Online -FeatureName IIS*
+
+if ($Features.State -contains 'Enabled') {
+    $false
+}
+else {
+    $true
+}

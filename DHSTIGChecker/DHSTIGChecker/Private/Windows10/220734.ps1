@@ -16,3 +16,10 @@ Verify the Bluetooth radio is turned off unless approved by the organization. If
 Approval must be documented with the ISSO.
 
 #>
+
+if ($HasBluetooth) {
+    "Not Reviewed"
+}
+else {
+    "Not Applicable"
+}

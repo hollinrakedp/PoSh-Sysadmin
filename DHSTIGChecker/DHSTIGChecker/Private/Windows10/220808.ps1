@@ -22,6 +22,9 @@ Type: REG_DWORD
 Value: 0x00000000 (0)
 
 #>
+if (!($Script:ComputerInfo.WindowsVersion -lt 1803)) {
+    return 'Not Applicable'
+}
 
 $Params = @{
     Path = "HKLM:\SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config\"

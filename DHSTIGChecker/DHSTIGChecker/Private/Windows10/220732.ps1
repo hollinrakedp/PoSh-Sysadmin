@@ -16,3 +16,10 @@ Locate the "Secondary Logon" service.
 If the "Startup Type" is not "Disabled" or the "Status" is "Running", this is a finding.
 
 #>
+$Seclogon = Get-Service -Name seclogon
+if (($Seclogon.StartType -ne 'Disabled') -or ($Seclogon.Status -eq 'Running')) {
+    $false
+}
+else {
+    $true
+}

@@ -16,3 +16,12 @@ Navigate to the Windows\System32 directory.
 If the "SNMP" application exists, this is a finding.
 
 #>
+
+$SNMP = Get-WindowsCapability -Online -Name "SNMP*"
+
+if ($SNMP.State -contains "Installed") {
+    $false
+}
+else {
+    $true
+}

@@ -16,3 +16,12 @@ Navigate to the Windows\System32 directory.
 If the "telnet" application exists, this is a finding.
 
 #>
+
+$Features = Get-WindowsOptionalFeature -Online -FeatureName "TelnetClient"
+
+if ($Features.State -contains 'Enabled') {
+    $false
+}
+else {
+    $true
+}

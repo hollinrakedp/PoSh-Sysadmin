@@ -17,3 +17,10 @@ Select "More Bluetooth Options"
 If "Alert me when a new Bluetooth device wants to connect" is not checked, this is a finding.
 
 #>
+
+if ($HasBluetooth) {
+    "Not Reviewed"
+}
+else {
+    "Not Applicable"
+}
