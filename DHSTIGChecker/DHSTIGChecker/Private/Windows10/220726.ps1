@@ -17,9 +17,7 @@ If the value for "nx" is not "OptOut", this is a finding.
 
 #>
 
-$DEP = Get-DEP
-
-switch ($DEP) {
+switch ($Script:ComputerInfo.OsDataExecutionPreventionSupportPolicy) {
     OptOut { $true }
     AlwaysOn { $true }
     Default { $false }

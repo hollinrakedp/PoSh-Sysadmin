@@ -43,7 +43,7 @@ function Invoke-STIGCheck {
             LocalAccount       = "S-1-5-113"
         }
 
-        $IsDomainJoined = (Get-CimInstance -Class Win32_ComputerSystem).PartOfDomain
+        $IsDomainJoined = $ComputerInfo.CsPartOfDomain
 
         if ($IsDomainJoined) {
             Write-Verbose "System is joined to a Domain."
