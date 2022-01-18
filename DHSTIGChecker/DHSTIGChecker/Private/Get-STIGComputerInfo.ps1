@@ -23,6 +23,7 @@ function Get-STIGComputerInfo {
             BiosManufacturer = $ComputerInfo.BiosManufacturer                                               #Dell Inc.
             BiosSeralNumber = $ComputerInfo.BiosSeralNumber
             CsDomainRole = $ComputerInfo.CsDomainRole                                                       #StandaloneWorkstation
+            CsPartOfDomain = $ComputerInfo.CsPartOfDomain                                                   #True
             CsDomain = $ComputerInfo.CsDomain                                                               #WORKGROUP
             CsName = $ComputerInfo.CsName                                                                   #$env:COMPUTERNAME
             CsProcessors = $ComputerInfo.CsProcessors                                                       #{Intel(R) Core(TM) i5-6300U CPU @ 2.40GHz}
