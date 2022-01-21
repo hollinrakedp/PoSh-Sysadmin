@@ -61,3 +61,32 @@ https://technet.microsoft.com/en-us/itpro/windows/keep-secure/credential-guard-r
 NOTE:  The severity level for the requirement will be upgraded to CAT II starting January 2020.
 
 #>
+
+if ($isVDI) {
+    if (!($VDIPersist)) {
+        Write-Verbose "This check does not apply: Reason - Non-Persistent VDI"
+        return "Not Applicable"
+    }
+}
+
+
+if ($Script:DeviceGuard.VirtualizationBasedSecurityStatus -eq 2) {
+    Write-Verbose "Device Guard Virtualization based security: Running"
+    $Results = @()
+    $ValidValues = 2, 3
+    foreach ($Value in $ValidValues) {
+        $Results += $Script:DeviceGuard.RequiredSecurityProperties -contains $Value
+    }
+    if ($Results -contains $true) {
+        Write-Verbose "Device Guard Required Security Properties: Base Virtualization Support, Secure Boot/Secure Boot, DMA Protection"
+        $true
+    }
+    else {
+        Write-Verbose "Device Guard Required Security Properties: Not requiring Secure Boot"
+        $false
+    }
+}
+else {
+    $false
+    Write-Verbose "Device Guard Virtualization based security: Not Running"
+}

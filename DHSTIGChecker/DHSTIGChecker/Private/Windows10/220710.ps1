@@ -31,3 +31,12 @@ Select the "Security" tab.
 If the NTFS permissions have not been reconfigured to restrict permissions to the specific groups or accounts that require access, this is a finding.
 
 #>
+$IgnoreDescription = @('Remote Admin','Default share','Remote IPC')
+$ReviewShares = Get-SmbShare | Where-Object {$_.Description -notin $IgnoreDescription}  
+
+if ($ReviewShares.count -eq 0) {
+    $true
+}
+else {
+    "Not Reviewed"
+}

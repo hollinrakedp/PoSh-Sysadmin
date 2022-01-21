@@ -50,3 +50,61 @@ BitLocker network unlock may be used in conjunction with a BitLocker PIN. See th
 https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-how-to-enable-network-unlock
 
 #>
+
+if ($isVDI) {
+    if (!($VDIPersist)) {
+        Write-Verbose "This check does not apply: Reason - Non-Persistent VDI"
+        return "Not Applicable"
+    }
+}
+
+$Results = @()
+
+$Params = @{
+    Path = "HKLM:\SOFTWARE\Policies\Microsoft\FVE\"
+    Name = "UseAdvancedStartup"
+    ExpectedValue = 1
+}
+
+$Results += Compare-RegKeyValue @Params
+
+$ValidValues = 1, 2
+$Check = @()
+foreach ($Value in $ValidValues) {
+    $Params = @{
+        Path          = "HKLM:\SOFTWARE\Policies\Microsoft\FVE\"
+        Name          = "UseTPMPIN"
+        ExpectedValue = $Value
+    }
+    
+    $Check += Compare-RegKeyValue @Params
+}
+
+$Results += switch ($Check -contains $true) {
+    True { $true }
+    False { $false }
+}
+
+$ValidValues = 1, 2
+$Check = @()
+foreach ($Value in $ValidValues) {
+    $Params = @{
+        Path          = "HKLM:\SOFTWARE\Policies\Microsoft\FVE\"
+        Name          = "UseTPMKeyPIN"
+        ExpectedValue = $Value
+    }
+    
+    $Check += Compare-RegKeyValue @Params
+}
+
+$Results += switch ($Check -contains $true) {
+    True { $true }
+    False { $false }
+}
+
+if ($Results -contains $false) {
+    $false
+}
+else {
+    $true
+}

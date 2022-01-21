@@ -48,3 +48,5 @@ if ($isVDI) {
         return
     }
 }
+
+$Script:DeviceGuard.SecurityServicesRunning -contains 1
