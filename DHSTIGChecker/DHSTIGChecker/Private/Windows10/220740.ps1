@@ -17,3 +17,12 @@ Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings 
 If the "Account lockout threshold" is "0" or more than "3" attempts, this is a finding.
 
 #>
+
+$result = Get-SecurityPolicySetting -Policy "LockoutBadCount"
+
+if (($result -ge 1) -and ($result -le 3)) {
+    $true
+}
+else {
+    $false
+}

@@ -17,3 +17,12 @@ Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings 
 If the value for "Enforce password history" is less than "24" passwords remembered, this is a finding.
 
 #>
+
+$result = Get-SecurityPolicySetting -Policy "PasswordHistorySize"
+
+if ($result -ge 24) {
+    $true
+}
+else {
+    $false
+}

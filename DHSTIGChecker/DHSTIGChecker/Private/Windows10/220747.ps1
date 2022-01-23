@@ -17,3 +17,12 @@ Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings 
 If the value for "Store password using reversible encryption" is not set to "Disabled", this is a finding.
 
 #>
+
+$result = Get-SecurityPolicySetting -Policy "ClearTextPassword"
+
+if ($result -eq 0) {
+    $true
+}
+else {
+    $false
+}

@@ -19,3 +19,12 @@ If the "Account lockout duration" is less than "15" minutes (excluding "0"), thi
 Configuring this to "0", requiring an administrator to unlock the account, is more restrictive and is not a finding.
 
 #>
+
+$result = Get-SecurityPolicySetting -Policy "LockoutDuration"
+
+if (($result -eq 0) -or ($result -ge 15)) {
+    $true
+}
+else {
+    $false
+}

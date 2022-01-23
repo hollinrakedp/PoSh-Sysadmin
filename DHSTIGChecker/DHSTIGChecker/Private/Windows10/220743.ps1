@@ -17,3 +17,12 @@ Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings 
 If the value for the "Maximum password age" is greater than "60" days, this is a finding.  If the value is set to "0" (never expires), this is a finding.
 
 #>
+
+$result = Get-SecurityPolicySetting -Policy "MaximumPasswordAge"
+
+if (($result -gt 0) -and ($result -le 60)) {
+    $true
+}
+else {
+    $false
+}

@@ -17,3 +17,12 @@ Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings 
 If the "Reset account lockout counter after" value is less than "15" minutes, this is a finding.
 
 #>
+
+$result = Get-SecurityPolicySetting -Policy "ResetLockoutCount"
+
+if ($result -ge 15) {
+    $true
+}
+else {
+    $false
+}

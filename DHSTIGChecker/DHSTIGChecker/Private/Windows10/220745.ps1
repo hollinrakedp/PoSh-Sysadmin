@@ -17,3 +17,12 @@ Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings 
 If the value for the "Minimum password length," is less than "14" characters, this is a finding.
 
 #>
+
+$result = Get-SecurityPolicySetting -Policy "MinimumPasswordLength"
+
+if ($result -ge 14) {
+    $true
+}
+else {
+    $false
+}

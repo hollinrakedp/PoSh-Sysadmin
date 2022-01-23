@@ -19,3 +19,12 @@ If the value for "Password must meet complexity requirements" is not set to "Ena
 If the site is using a password filter that requires this setting be set to "Disabled" for the filter to be used, this would not be considered a finding.
 
 #>
+
+$result = Get-SecurityPolicySetting -Policy "PasswordComplexity"
+
+if ($result -eq 1) {
+    $true
+}
+else {
+    $false
+}

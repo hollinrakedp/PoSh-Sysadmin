@@ -17,3 +17,12 @@ Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings 
 If the value for the "Minimum password age" is less than "1" day, this is a finding.
 
 #>
+
+$result = Get-SecurityPolicySetting -Policy "MinimumPasswordAge"
+
+if ($result -gt 0) {
+    $true
+}
+else {
+    $false
+}
