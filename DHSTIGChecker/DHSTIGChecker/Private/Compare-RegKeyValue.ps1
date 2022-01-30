@@ -40,7 +40,7 @@ function Compare-RegKeyValue {
         $Comparison = "like"
     )
 
-    $Exists = Test-RegistryKeyValueExists -Path $Path -Name $Name
+    $Exists = Test-RegKeyValueExists -Path $Path -Name $Name
 
     if ($Exists) {
         $CurrentValue = Get-ItemProperty -Path $Path -Name $Name
