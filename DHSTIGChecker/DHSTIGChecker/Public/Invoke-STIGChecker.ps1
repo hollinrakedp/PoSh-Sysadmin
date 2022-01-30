@@ -1,11 +1,16 @@
-function Invoke-STIGCheck {
+function Invoke-STIGChecker {
     [CmdletBinding()]
     param (
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('Windows10', 'Server2016', 'Server2019')]
-        [string]$STIG,
-        [Parameter(ValueFromPipelineByPropertyName)]
-        [string[]]$ID,
+        [ValidateScript({
+                if ($_ -in (& $TabCompleteAvailableSTIGs)) {
+                    $true
+                }
+                else {
+                    throw "The supplied value `'$_`' is invalid. Valid values: $($STIGPath.Name -join ', ')"
+                }
+            })]
+        [string]$Name,
         [Parameter(ValueFromPipelineByPropertyName)]
         [Alias('Path')]
         [string]$ConfigPath
@@ -13,7 +18,7 @@ function Invoke-STIGCheck {
     
     begin {
         try {
-            $EnvConfig = Get-STIGEnvironmentConfig -ConfigPath "$ConfigPath"
+            $EnvConfig = Get-STIGCheckerConfig -ConfigPath "$ConfigPath"
         }
         catch {
             Write-Warning "Failed to get the Environment configuration file."
@@ -28,9 +33,16 @@ function Invoke-STIGCheck {
             return
         }
 
+        SecEdit.exe /Export  /cfg currentsecpolicy.txt | Out-Null
+        $CurrentSecPolicy = @{}
+        Get-Content .\currentsecpolicy.txt | Where-Object { ($_ -match '=') -and ($_ -notmatch 'MACHINE') } | ForEach-Object { $Script:CurrentSecPolicy += ConvertFrom-StringData $_ }
+        Remove-Item .\currentsecpolicy.txt
+        
         $AuditPolicy = Get-AdvancedAuditPolicy | Select-Object 'Subcategory', 'Inclusion Setting'
 
         $HasBluetooth = Test-HasBluetooth
+
+        $DeviceGuard = Get-DeviceGuard
 
         $SIDLocalGroup = @{
             Administrators     = "S-1-5-32-544"
@@ -58,15 +70,41 @@ function Invoke-STIGCheck {
                 Write-Warning "Unable to gather Domain SIDs. Results may not be accurate."
             }
         }
+        $STIGs = Get-ChildItem "$STIGRootPath/$Name"
+
+        #Initialize Counters
+        [int]$STIGCounter = 0
+        [int]$STIGCounterNA = 0
+        [int]$STIGCounterO = 0
+        [int]$STIGCounterNF = 0
+        [int]$STIGCounterNR = 0
     }
     
     process {
-        
+        Write-Verbose "Found $($STIGS.Count) Checks."
+        foreach ($STIG in $STIGs) {
+            $STIGCounter++
+            Write-Progress -Activity "Running STIG Checks" -Status "Check: VulnID $($STIG.BaseName)" -PercentComplete (($STIGCounter / $STIGs.Count)  * 100)
+            Write-Verbose "Check: $STIGCounter"
+            Write-Verbose "Vulnerability ID: $($STIG.BaseName)"
+            Write-Verbose "$($STIG.FullName)"
+            $result = . $STIG.FullName
+            switch ($result) {
+                True { $STIGCounterNF++ }
+                False { $STIGCounterO++ }
+                'Not Applicable' { $STIGCounterNA++ }
+                'Not Reviewed' { $STIGCounterNR++ }
+            }
+        }
+
+        Write-Verbose "Completed:     $STIGCounter"
+        Write-Verbose "N/A:           $STIGCounterNA"
+        Write-Verbose "Open:          $STIGCounterO"
+        Write-Verbose "Not a Finding: $STIGCounterNF"
+        Write-Verbose "Not Reviewed:  $STIGCounterNR"
     }
     
     end {
-        $SIDLocalGroup
-        $EnvConfig
-        $ComputerInfo
+        
     }
 }
