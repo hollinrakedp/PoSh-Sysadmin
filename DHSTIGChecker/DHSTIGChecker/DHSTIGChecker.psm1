@@ -2,15 +2,17 @@ $Public  = @( Get-ChildItem -Path $PSScriptRoot\Public\*.ps1 -ErrorAction Silent
 $Private = @( Get-ChildItem -Path $PSScriptRoot\Private\*.ps1 -ErrorAction SilentlyContinue )
 
 Foreach($script in @($Public + $Private)) {
-    Try
-    {
+    Try {
         . $script.fullname
     }
-    Catch
-    {
+    Catch {
         Write-Error -Message "Failed to import function $($script.fullname): $_"
     }
 }
 
-$STIGPath = "$PSScriptRoot\STIG"
+$STIGRootPath = "$PSScriptRoot\STIG"
+
+$TabCompleteAvailableSTIGs = {(Get-ChildItem -Path $STIGRootPath -Directory).Name}
+Register-ArgumentCompleter -CommandName Invoke-STIGChecker -ParameterName STIG -ScriptBlock $TabCompleteAvailableSTIGs
+
 Export-ModuleMember -Function $Public.Basename
