@@ -4,7 +4,7 @@ function Show-HyperthreadingStatus {
     Show if Hyperthreading is enabled
 
     .DESCRIPTION
-    
+    Returns true if hyperthreading is enabled.
 
     .NOTES
     Name        : Show-HyperthreadingStatus
