@@ -7,7 +7,7 @@ $manifest = @{
     Author            = 'Darren Hollinrake'
     Company           = 'Darren Hollinrake'
     Description       = 'Check Windows STIG settings on a system.'
-    ModuleVersion     = '0.1'
+    ModuleVersion     = '0.2'
     FunctionsToExport = $FunctionsToExport
 }
 if (Test-Path $manifest.Path){
