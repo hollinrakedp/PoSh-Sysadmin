@@ -72,6 +72,8 @@ function Invoke-STIGChecker {
         }
         $STIGs = Get-ChildItem "$STIGRootPath/$Name"
 
+        $STIGResults = @()
+
         #Initialize Counters
         [int]$STIGCounter = 0
         [int]$STIGCounterNA = 0
@@ -84,27 +86,30 @@ function Invoke-STIGChecker {
         Write-Verbose "Found $($STIGS.Count) Checks."
         foreach ($STIG in $STIGs) {
             $STIGCounter++
-            Write-Progress -Activity "Running STIG Checks" -Status "Check: VulnID $($STIG.BaseName)" -PercentComplete (($STIGCounter / $STIGs.Count)  * 100)
+            #Write-Progress -Activity "Running STIG Checks" -Status "Check: VulnID $($STIG.BaseName)" -PercentComplete ($STIGCounter / $STIGS.Count * 100)
             Write-Verbose "Check: $STIGCounter"
             Write-Verbose "Vulnerability ID: $($STIG.BaseName)"
             Write-Verbose "$($STIG.FullName)"
-            $result = . $STIG.FullName
+            [string]$result = . $STIG.FullName
             switch ($result) {
                 True { $STIGCounterNF++ }
                 False { $STIGCounterO++ }
                 'Not Applicable' { $STIGCounterNA++ }
                 'Not Reviewed' { $STIGCounterNR++ }
             }
+            $STIGResults += [PSCustomObject]@{
+                VulnID = $($STIG.BaseName)
+                Result = $result
+            }
         }
-
-        Write-Verbose "Completed:     $STIGCounter"
-        Write-Verbose "N/A:           $STIGCounterNA"
-        Write-Verbose "Open:          $STIGCounterO"
-        Write-Verbose "Not a Finding: $STIGCounterNF"
-        Write-Verbose "Not Reviewed:  $STIGCounterNR"
     }
     
     end {
-        
+        Write-Verbose "Completed:       $STIGCounter"
+        Write-Verbose "Open:            $STIGCounterO ($([math]::Round($($STIGCounterO/$STIGCounter*100)))%)"
+        Write-Verbose "Not a Finding:   $STIGCounterNF ($([math]::Round($($STIGCounterNF/$STIGCounter*100)))%)"
+        Write-Verbose "Not Reviewed:    $STIGCounterNR ($([math]::Round($($STIGCounterNR/$STIGCounter*100)))%)"
+        Write-Verbose "Not Applicable:  $STIGCounterNA ($([math]::Round($($STIGCounterNR/$STIGCounter*100)))%)"
+        $STIGResults
     }
 }
