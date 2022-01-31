@@ -34,5 +34,6 @@ if ($IsDomainJoined) {
     }
 }
 else {
-    "Not Applicable"
+    Write-Verbose "This check does not apply: Reason - Not Domain-Joined"
+    return "Not Applicable"
 }

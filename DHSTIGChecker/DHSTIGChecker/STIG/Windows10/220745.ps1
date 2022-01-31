@@ -18,9 +18,9 @@ If the value for the "Minimum password length," is less than "14" characters, th
 
 #>
 
-$result = Get-CurrentSecurityPolicySetting -Policy "MinimumPasswordLength"
+$Local:Result = Get-CurrentSecurityPolicySetting -Policy "MinimumPasswordLength"
 
-if ($result -ge 14) {
+if ($Local:Result -ge 14) {
     $true
 }
 else {

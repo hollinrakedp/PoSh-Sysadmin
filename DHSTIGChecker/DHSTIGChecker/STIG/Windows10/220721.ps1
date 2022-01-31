@@ -17,9 +17,9 @@ If the "telnet" application exists, this is a finding.
 
 #>
 
-$Features = Get-WindowsOptionalFeature -Online -FeatureName "TelnetClient"
+$Local:Feature = Get-WindowsOptionalFeature -Online -FeatureName "TelnetClient"
 
-if ($Features.State -contains 'Enabled') {
+if ($Local:Feature.State -contains 'Enabled') {
     $false
 }
 else {

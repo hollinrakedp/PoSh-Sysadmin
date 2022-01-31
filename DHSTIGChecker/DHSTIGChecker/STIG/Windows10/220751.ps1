@@ -23,12 +23,12 @@ Account Management >> User Account Management - Failure
 
 #>
 
-$Category = "User Account Management"
-$Setting = "Failure"
+$Local:Category = "User Account Management"
+$Local:Setting = "Failure"
 
-$AuditSetting = $Script:AuditPolicy | Where-Object {$_.Subcategory -contains "$Category"}
+$Local:AuditSetting = $AuditPolicy | Where-Object {$_.Subcategory -contains "$Local:Category"}
 
-if ($AuditSetting.'Inclusion Setting' -match $Setting) {
+if ($Local:AuditSetting.'Inclusion Setting' -match $Local:Setting) {
     $true
 }
 else {

@@ -26,7 +26,7 @@ Value:  0x00001000 (4096)
 
 #>
 
-$Results = @()
+$Local:Results = @()
 $Paths = @(
     "HKLM:\SOFTWARE\Classes\batfile\shell\runasuser\",
     "HKLM:\SOFTWARE\Classes\cmdfile\shell\runasuser\",
@@ -40,10 +40,10 @@ foreach ($Path in $Paths) {
         Name          = "SuppressionPolicy"
         ExpectedValue = 4096
     }
-    $Results += Compare-RegKeyValue @Params
+    $Local:Results += Compare-RegKeyValue @Params
 }
 
-if ($Results -contains $false) {
+if ($Local:Results -contains $false) {
     $false
 }
 else {

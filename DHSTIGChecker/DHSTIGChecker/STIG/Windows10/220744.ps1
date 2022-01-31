@@ -18,9 +18,9 @@ If the value for the "Minimum password age" is less than "1" day, this is a find
 
 #>
 
-$result = Get-CurrentSecurityPolicySetting -Policy "MinimumPasswordAge"
+$Local:Result = Get-CurrentSecurityPolicySetting -Policy "MinimumPasswordAge"
 
-if ($result -gt 0) {
+if ($Local:Result -gt 0) {
     $true
 }
 else {

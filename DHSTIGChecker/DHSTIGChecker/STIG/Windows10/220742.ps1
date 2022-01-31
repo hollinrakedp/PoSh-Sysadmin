@@ -18,9 +18,9 @@ If the value for "Enforce password history" is less than "24" passwords remember
 
 #>
 
-$result = Get-CurrentSecurityPolicySetting -Policy "PasswordHistorySize"
+$Local:Result = Get-CurrentSecurityPolicySetting -Policy "PasswordHistorySize"
 
-if ($result -ge 24) {
+if ($Local:Result -ge 24) {
     $true
 }
 else {

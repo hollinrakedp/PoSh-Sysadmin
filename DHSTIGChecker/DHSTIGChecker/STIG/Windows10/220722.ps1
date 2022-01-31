@@ -17,9 +17,9 @@ If the "TFTP" application exists, this is a finding.
 
 #>
 
-$Features = Get-WindowsOptionalFeature -Online -FeatureName "TFTP"
+$Local:Feature = Get-WindowsOptionalFeature -Online -FeatureName "TFTP"
 
-if ($Features.State -contains 'Enabled') {
+if ($Local:Feature.State -contains 'Enabled') {
     $false
 }
 else {

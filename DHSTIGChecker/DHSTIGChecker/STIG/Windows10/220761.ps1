@@ -27,12 +27,12 @@ If the system does not audit the above, this is a finding.
 
 #>
 
-$Category = "File Share"
-$Setting = "Failure"
+$Local:Category = "File Share"
+$Local:Setting = "Failure"
 
-$AuditSetting = $Script:AuditPolicy | Where-Object {$_.Subcategory -contains "$Category"}
+$Local:AuditSetting = $AuditPolicy | Where-Object {$_.Subcategory -contains "$Local:Category"}
 
-if ($AuditSetting.'Inclusion Setting' -match $Setting) {
+if ($Local:AuditSetting.'Inclusion Setting' -match $Local:Setting) {
     $true
 }
 else {

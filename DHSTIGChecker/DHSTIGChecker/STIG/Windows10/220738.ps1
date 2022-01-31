@@ -15,9 +15,8 @@ If there is no such documented policy or procedure in place, this is a finding.
 
 #>
 if ($isVDI -and !$VDIPersist) {
-    "Not Reviewed"
-    return
+    return "Not Reviewed"
 }
 else {
-    "Not Applicable"
+    return "Not Applicable"
 }

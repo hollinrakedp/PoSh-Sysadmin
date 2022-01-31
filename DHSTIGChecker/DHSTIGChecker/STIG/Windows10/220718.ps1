@@ -20,9 +20,9 @@ If an application requires IIS or a subset to be installed to function, this nee
 
 #>
 
-$Features = Get-WindowsOptionalFeature -Online -FeatureName IIS*
+$Local:Feature = Get-WindowsOptionalFeature -Online -FeatureName IIS*
 
-if ($Features.State -contains 'Enabled') {
+if ($Local:Feature.State -contains 'Enabled') {
     $false
 }
 else {

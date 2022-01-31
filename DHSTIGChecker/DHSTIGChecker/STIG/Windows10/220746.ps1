@@ -20,9 +20,9 @@ If the site is using a password filter that requires this setting be set to "Dis
 
 #>
 
-$result = Get-CurrentSecurityPolicySetting -Policy "PasswordComplexity"
+$Local:Result = Get-CurrentSecurityPolicySetting -Policy "PasswordComplexity"
 
-if ($result -eq 1) {
+if ($Local:Result -eq 1) {
     $true
 }
 else {

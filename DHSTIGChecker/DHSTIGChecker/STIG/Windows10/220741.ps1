@@ -18,9 +18,9 @@ If the "Reset account lockout counter after" value is less than "15" minutes, th
 
 #>
 
-$result = Get-CurrentSecurityPolicySetting -Policy "ResetLockoutCount"
+$Local:Result = Get-CurrentSecurityPolicySetting -Policy "ResetLockoutCount"
 
-if ($result -ge 15) {
+if ($Local:Result -ge 15) {
     $true
 }
 else {

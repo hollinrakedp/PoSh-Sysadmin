@@ -25,7 +25,7 @@ This can be left not configured or set to "No action" on workstations with the f
 -The screen saver is properly configured to lock as required.
 
 #>
-$Results = @()
+$Local:Results = @()
 $ValidValues = 1, 2
 
 foreach ($Value in $ValidValues) {
@@ -35,10 +35,10 @@ foreach ($Value in $ValidValues) {
         ExpectedValue = $Value
     }
 
-    $Results += Compare-RegKeyValue @Params
+    $Local:Results += Compare-RegKeyValue @Params
 }
 
-if ($Results -contains "Not a Finding") {
+if ($Local:Results -contains "Not a Finding") {
     $true
 }
 else {

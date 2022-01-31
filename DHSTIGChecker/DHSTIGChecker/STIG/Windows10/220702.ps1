@@ -35,28 +35,28 @@ if ($IsVDI) {
 
 $FixedDrives = (Get-Volume | Where-Object {($_.DriveType -eq 'Fixed') -and ($null -ne $_.DriveLetter)} | Select-Object DriveLetter).DriveLetter
 
-$Results = @()
+$Local:Results = @()
 
 foreach ($Drive in $FixedDrives) {
     $BitlockerVolume = Get-BitLockerVolume -MountPoint "$Drive`:"
     switch ($BitlockerVolume.VolumeStatus) {
         FullyEncrypted {
-            $Results += $true
+            $Local:Results += $true
             continue
         }
         EncryptionInProgress {
-            $Results += $true
+            $Local:Results += $true
             continue
         }
         Default {
-            $Results += $false
+            $Local:Results += $false
         }
     }
 }
 
-if ($Results -contains $false) {
-    $false
+if ($Local:Results -contains $false) {
+    return $false
 }
 else {
-    $true
+    return $true
 }

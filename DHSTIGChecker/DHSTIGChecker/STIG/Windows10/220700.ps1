@@ -28,6 +28,9 @@ if ($isVDI) {
 
 $SecureBoot = Confirm-SecureBootUEFI
 switch ($SecureBoot) {
-    "Cmdlet not supported on this platform." { $SecureBoot = $false }
+    "Cmdlet not supported on this platform." {
+        Write-Verbose "System does not support SecureBoot."
+        $SecureBoot = $false 
+    }
 }
-$SecureBoot
+return $SecureBoot

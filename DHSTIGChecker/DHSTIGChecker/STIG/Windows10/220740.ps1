@@ -18,9 +18,9 @@ If the "Account lockout threshold" is "0" or more than "3" attempts, this is a f
 
 #>
 
-$result = Get-CurrentSecurityPolicySetting -Policy "LockoutBadCount"
+$Local:Result = Get-CurrentSecurityPolicySetting -Policy "LockoutBadCount"
 
-if (($result -ge 1) -and ($result -le 3)) {
+if (($Result -ge 1) -and ($Result -le 3)) {
     $true
 }
 else {

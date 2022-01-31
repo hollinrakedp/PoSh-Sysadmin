@@ -72,12 +72,12 @@ if ($isVDI) {
 
 if ($Script:DeviceGuard.VirtualizationBasedSecurityStatus -eq 2) {
     Write-Verbose "Device Guard Virtualization based security: Running"
-    $Results = @()
+    $Local:Results = @()
     $ValidValues = 2, 3
     foreach ($Value in $ValidValues) {
-        $Results += $Script:DeviceGuard.RequiredSecurityProperties -contains $Value
+        $Local:Results += $Script:DeviceGuard.RequiredSecurityProperties -contains $Value
     }
-    if ($Results -contains $true) {
+    if ($Local:Results -contains $true) {
         Write-Verbose "Device Guard Required Security Properties: Base Virtualization Support, Secure Boot/Secure Boot, DMA Protection"
         $true
     }

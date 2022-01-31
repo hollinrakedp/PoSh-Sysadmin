@@ -18,9 +18,9 @@ If the value for "Store password using reversible encryption" is not set to "Dis
 
 #>
 
-$result = Get-CurrentSecurityPolicySetting -Policy "ClearTextPassword"
+$Local:Result = Get-CurrentSecurityPolicySetting -Policy "ClearTextPassword"
 
-if ($result -eq 0) {
+if ($Local:Result -eq 0) {
     $true
 }
 else {

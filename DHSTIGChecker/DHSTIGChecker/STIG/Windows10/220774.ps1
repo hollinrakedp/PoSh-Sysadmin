@@ -23,12 +23,12 @@ System >> Other System Events - Failure
 
 #>
 
-$Category = "Other System Events"
-$Setting = "Failure"
+$Local:Category = "Other System Events"
+$Local:Setting = "Failure"
 
-$AuditSetting = $Script:AuditPolicy | Where-Object {$_.Subcategory -contains "$Category"}
+$Local:AuditSetting = $AuditPolicy | Where-Object {$_.Subcategory -contains "$Local:Category"}
 
-if ($AuditSetting.'Inclusion Setting' -match $Setting) {
+if ($Local:AuditSetting.'Inclusion Setting' -match $Local:Setting) {
     $true
 }
 else {

@@ -32,7 +32,7 @@ Possible values for this setting are:
 
 #>
 
-$Results = @()
+$Local:Results = @()
 $ValidValues = 1, 3, 8
 
 foreach ($Value in $ValidValues) {
@@ -42,10 +42,10 @@ foreach ($Value in $ValidValues) {
         ExpectedValue = $Value
     }
     
-    $Results += Compare-RegKeyValue @Params
+    $Local:Results += Compare-RegKeyValue @Params
 }
 
-if ($Results -contains $true) {
+if ($Local:Results -contains $true) {
     $true
 }
 else {

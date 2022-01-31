@@ -25,9 +25,9 @@ Value: 0x00000000 (0)
 
 #>
 
-$AppliesTo = '1507','1511','1607', '1703', '1709'
+$Local:AppliesTo = '1507','1511','1607', '1703', '1709'
 
-if (!($AppliesTo -contains $ComputerInfo.WindowsVersion)) {
+if (!($Local:AppliesTo -contains $ComputerInfo.WindowsVersion)) {
     'Not Applicable'
 }
 else {

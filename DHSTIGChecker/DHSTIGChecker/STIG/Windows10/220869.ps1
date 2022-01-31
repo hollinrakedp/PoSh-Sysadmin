@@ -32,22 +32,22 @@ Value: 0x00000002 (2)
 
 #>
 
-$Results = @()
-$Names = @(
+$Local:Results = @()
+$Local:Names = @(
     "LetAppsActivateWithVoiceAboveLock",
     "LetAppsActivateWithVoice")
 
-foreach ($_ in $Names) {
+foreach ($_ in $Local:Names) {
     $Params = @{
         Path          = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy\"
         Name          = "$_"
         ExpectedValue = 2
     }
     
-    $Results += Compare-RegKeyValue @Params
+    $Local:Results += Compare-RegKeyValue @Params
 }
 
-if ($Results -contains $false) {
+if ($Local:Results -contains $false) {
     $false
 }
 else {

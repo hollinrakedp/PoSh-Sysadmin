@@ -9,7 +9,7 @@ function Get-CurrentSecurityPolicySetting {
     }
     
     process {
-        $result = $Script:CurrentSecPolicy["$Policy"]
+        $result = $CurrentSecPolicy["$Policy"]
         if ([string]::IsNullOrEmpty($result)) {
             "Policy not found"
         }

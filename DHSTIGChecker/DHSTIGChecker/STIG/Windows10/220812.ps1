@@ -44,8 +44,7 @@ Value: 0x00000001 (1) (Enabled with UEFI lock)
 
 if ($isVDI) {
     if ($VDIPersist) {
-        "Not Applicable"
-        return
+        return "Not Applicable"
     }
 }
 

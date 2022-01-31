@@ -23,12 +23,12 @@ Detailed Tracking >> Plug and Play Events - Success
 
 #>
 
-$Category = "Plug and Play Events"
-$Setting = "Success"
+$Local:Category = "Plug and Play Events"
+$Local:Setting = "Success"
 
-$AuditSetting = $Script:AuditPolicy | Where-Object {$_.Subcategory -contains "$Category"}
+$Local:AuditSetting = $AuditPolicy | Where-Object {$_.Subcategory -contains "$Local:Category"}
 
-if ($AuditSetting.'Inclusion Setting' -match $Setting) {
+if ($Local:AuditSetting.'Inclusion Setting' -match $Local:Setting) {
     $true
 }
 else {

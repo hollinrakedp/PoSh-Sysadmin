@@ -16,10 +16,10 @@ Run "Services.msc".
 If "Simple TCP/IP Services" is listed, this is a finding.
 
 #>
-$Services = @()
-$Services += Get-Service -Name "simptcp"
+$Local:Service = @()
+$Local:Service += Get-Service -Name "simptcp" -ErrorAction SilentlyContinue
 
-if ($Service.Count -ne 0) {
+if ($Local:Service.Count -ne 0) {
     $false
 }
 else {

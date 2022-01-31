@@ -23,12 +23,12 @@ Policy Change >> Authorization Policy Change - Success
 
 #>
 
-$Category = "Authorization Policy Change"
-$Setting = "Success"
+$Local:Category = "Authorization Policy Change"
+$Local:Setting = "Success"
 
-$AuditSetting = $Script:AuditPolicy | Where-Object {$_.Subcategory -contains "$Category"}
+$Local:AuditSetting = $AuditPolicy | Where-Object {$_.Subcategory -contains "$Local:Category"}
 
-if ($AuditSetting.'Inclusion Setting' -match $Setting) {
+if ($Local:AuditSetting.'Inclusion Setting' -match $Local:Setting) {
     $true
 }
 else {

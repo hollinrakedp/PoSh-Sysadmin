@@ -23,12 +23,12 @@ Logon/Logoff >> Logon - Failure
 
 #>
 
-$Category = "Logon"
-$Setting = "Failure"
+$Local:Category = "Logon"
+$Local:Setting = "Failure"
 
-$AuditSetting = $Script:AuditPolicy | Where-Object {$_.Subcategory -contains "$Category"}
+$Local:AuditSetting = $AuditPolicy | Where-Object {$_.Subcategory -contains "$Local:Category"}
 
-if ($AuditSetting.'Inclusion Setting' -match $Setting) {
+if ($Local:AuditSetting.'Inclusion Setting' -match $Local:Setting) {
     $true
 }
 else {

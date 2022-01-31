@@ -24,12 +24,12 @@ Policy Change  >> MPSSVC Rule-Level Policy Change - Failure
 
 #>
 
-$Category = "MPSSVC Rule-Level Policy Change"
-$Setting = "Failure"
+$Local:Category = "MPSSVC Rule-Level Policy Change"
+$Local:Setting = "Failure"
 
-$AuditSetting = $Script:AuditPolicy | Where-Object {$_.Subcategory -contains "$Category"}
+$Local:AuditSetting = $AuditPolicy | Where-Object {$_.Subcategory -contains "$Local:Category"}
 
-if ($AuditSetting.'Inclusion Setting' -match $Setting) {
+if ($Local:AuditSetting.'Inclusion Setting' -match $Local:Setting) {
     $true
 }
 else {

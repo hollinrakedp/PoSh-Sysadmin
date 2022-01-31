@@ -18,9 +18,9 @@ If the value for the "Maximum password age" is greater than "60" days, this is a
 
 #>
 
-$result = Get-CurrentSecurityPolicySetting -Policy "MaximumPasswordAge"
+$Local:Result = Get-CurrentSecurityPolicySetting -Policy "MaximumPasswordAge"
 
-if (($result -gt 0) -and ($result -le 60)) {
+if (($Local:Result -gt 0) -and ($Local:Result -le 60)) {
     $true
 }
 else {

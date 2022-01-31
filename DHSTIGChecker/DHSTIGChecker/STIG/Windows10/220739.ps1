@@ -20,9 +20,9 @@ Configuring this to "0", requiring an administrator to unlock the account, is mo
 
 #>
 
-$result = Get-CurrentSecurityPolicySetting -Policy "LockoutDuration"
+$Local:Result = Get-CurrentSecurityPolicySetting -Policy "LockoutDuration"
 
-if (($result -eq 0) -or ($result -ge 15)) {
+if (($Local:Result -eq 0) -or ($Local:Result -ge 15)) {
     $true
 }
 else {
