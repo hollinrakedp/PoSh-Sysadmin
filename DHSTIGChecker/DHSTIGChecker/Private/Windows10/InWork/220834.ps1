@@ -39,9 +39,9 @@ foreach ($Value in $ValidValues) {
     $Results += Compare-RegKeyValue @Params
 }
 
-if ($Results -contains "Not a Finding") {
-    "Not a Finding"
+if ($Results -contains $true) {
+    $true
 }
 else {
-    "Open"
+    $false
 }
