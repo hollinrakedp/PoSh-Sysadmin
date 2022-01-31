@@ -1,0 +1,23 @@
+{
+    "Windows10":  [
+                       {
+                           "Date":  "01 Nov 2021",
+                           "Version":  "2",
+                           "Release": "3"
+                       }
+                   ],
+    "Server2016":  [
+                       {
+                            "Date":  "UNKNOWN",
+                            "Version":  "UNKNOWN",
+                            "Release": "UNKNOWN"
+                       }
+                    ],
+    "Server2019":  [
+                       {
+                            "Date":  "UNKNOWN",
+                            "Version":  "UNKNOWN",
+                            "Release": "UNKNOWN"
+                       }
+                    ]
+}
