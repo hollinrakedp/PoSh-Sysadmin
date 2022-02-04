@@ -17,7 +17,7 @@ Approval must be documented with the ISSO.
 
 #>
 
-if ($HasBluetooth) {
+if ($Script:HasBluetooth) {
     "Not Reviewed"
 }
 else {

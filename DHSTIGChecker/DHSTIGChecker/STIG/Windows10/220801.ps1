@@ -27,14 +27,14 @@ Value:  0x00001000 (4096)
 #>
 
 $Local:Results = @()
-$Paths = @(
+$Local:Paths = @(
     "HKLM:\SOFTWARE\Classes\batfile\shell\runasuser\",
     "HKLM:\SOFTWARE\Classes\cmdfile\shell\runasuser\",
     "HKLM:\SOFTWARE\Classes\exefile\shell\runasuser\",
     "HKLM:\SOFTWARE\Classes\mscfile\shell\runasuser\"
 )
 
-foreach ($Path in $Paths) {
+foreach ($Path in $Local:Paths) {
     $Params = @{
         Path          = "$Path"
         Name          = "SuppressionPolicy"

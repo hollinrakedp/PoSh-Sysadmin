@@ -26,9 +26,9 @@ This can be left not configured or set to "No action" on workstations with the f
 
 #>
 $Local:Results = @()
-$ValidValues = 1, 2
+$Local:ValidValues = 1, 2
 
-foreach ($Value in $ValidValues) {
+foreach ($Value in $Local:ValidValues) {
     $Params = @{
         Path          = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\"
         Name          = "SCRemoveOption"

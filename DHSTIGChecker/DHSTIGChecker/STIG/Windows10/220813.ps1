@@ -33,9 +33,9 @@ Possible values for this setting are:
 #>
 
 $Local:Results = @()
-$ValidValues = 1, 3, 8
+$Local:ValidValues = 1, 3, 8
 
-foreach ($Value in $ValidValues) {
+foreach ($Value in $Local:ValidValues) {
     $Params = @{
         Path          = "HKLM:\SYSTEM\CurrentControlSet\Policies\EarlyLaunch\"
         Name          = "DriverLoadPolicy"

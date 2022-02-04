@@ -22,9 +22,9 @@ Administrators
 
 #>
 
-$GrantedPrivilege = ($CurrentSecPolicy.SeSystemEnvironmentPrivilege -split ',').trimstart('*')
+$GrantedPrivilege = ($Script:CurrentSecPolicy.SeSystemEnvironmentPrivilege -split ',').trimstart('*')
 
-$Allowed = @($SIDLocalGroup.Administrators)
+$Allowed = @($Script:SIDLocalGroup.Administrators)
 
 $Local:Results = @()
 

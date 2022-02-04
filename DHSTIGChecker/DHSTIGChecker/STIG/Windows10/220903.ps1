@@ -89,9 +89,9 @@ $Thumbprints = @(
     "4ECB5CC3095670454DA1CBD410FC921F46B8564B"
 )
 
-$Local:Result = Compare-Object -DifferenceObject $Certs.Thumbprint -ReferenceObject $Thumbprints -IncludeEqual -ExcludeDifferent
+$Local:Results = Compare-Object -DifferenceObject $Certs.Thumbprint -ReferenceObject $Thumbprints -IncludeEqual -ExcludeDifferent
 
-if ($Local:Result.count -eq $Thumbprints.Count) {
+if ($Local:Results.count -eq $Thumbprints.Count) {
     $true
 }
 else {

@@ -46,7 +46,7 @@ Value: 0x00000000 (0) - Off
 
 #Does not check LTSB
 
-if ($IsDomainJoined) {
+if ($Script:IsDomainJoined) {
     $Params = @{
         Path          = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization\"
         Name          = "DODownloadMode"
@@ -58,9 +58,9 @@ if ($IsDomainJoined) {
 }
 else {
     $Local:Results = @()
-    $ValidValues = 0, 1
+    $Local:ValidValues = 0, 1
 
-    foreach ($Value in $ValidValues) {
+    foreach ($Value in $Local:ValidValues) {
         $Params = @{
             Path          = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config\"
             Name          = "DODownloadMode"

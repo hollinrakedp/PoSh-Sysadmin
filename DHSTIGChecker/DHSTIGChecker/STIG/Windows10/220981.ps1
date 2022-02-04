@@ -22,9 +22,9 @@ Administrators
 
 #>
 
-$GrantedPrivilege = ($CurrentSecPolicy.SeProfileSingleProcessPrivilege -split ',').trimstart('*')
+$GrantedPrivilege = ($Script:CurrentSecPolicy.SeProfileSingleProcessPrivilege -split ',').trimstart('*')
 
-$Allowed = @($SIDLocalGroup.Administrators)
+$Allowed = @($Script:SIDLocalGroup.Administrators)
 
 $Local:Results = @()
 

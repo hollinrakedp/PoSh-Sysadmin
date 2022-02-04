@@ -22,9 +22,9 @@ Administrators
 
 #>
 
-$GrantedPrivilege = ($CurrentSecPolicy.SeManageVolumePrivilege -split ',').trimstart('*')
+$GrantedPrivilege = ($Script:CurrentSecPolicy.SeManageVolumePrivilege -split ',').trimstart('*')
 
-$Allowed = @($SIDLocalGroup.Administrators)
+$Allowed = @($Script:SIDLocalGroup.Administrators)
 
 $Local:Results = @()
 

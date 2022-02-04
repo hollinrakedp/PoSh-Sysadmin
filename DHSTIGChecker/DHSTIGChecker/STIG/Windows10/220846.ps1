@@ -23,8 +23,8 @@ Value: 1
 
 #>
 
-if ($isVDI) {
-    if ($VDIPersist) {
+if ($Script:isVDI) {
+    if ($Script:VDIPersist) {
         return "Not Applicable"
     }
 }

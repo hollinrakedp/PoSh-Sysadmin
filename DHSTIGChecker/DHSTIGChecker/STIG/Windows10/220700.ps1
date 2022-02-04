@@ -19,8 +19,8 @@ Under "System Summary", if "Secure Boot State" does not display "On", this is fi
 
 #>
 
-if ($isVDI) {
-    if (!($VDIPersist)) {
+if ($Script:isVDI) {
+    if (!($Script:VDIPersist)) {
         Write-Verbose "This check does not apply: Reason - Non-Persistent VDI"
         return "Not Applicable"
     }

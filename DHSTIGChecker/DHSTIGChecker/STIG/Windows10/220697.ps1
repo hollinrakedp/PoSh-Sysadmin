@@ -23,9 +23,9 @@ If "System type" is not "64-bit operating system�", this is a finding.
 
 #>
 
-if ($IsDomainJoined) {
-    $Bit = $ComputerInfo.OsArchitecture
-    $ProductName = $ComputerInfo.WindowsProductName
+if ($Script:IsDomainJoined) {
+    $Bit = $Script:ComputerInfo.OsArchitecture
+    $ProductName = $Script:ComputerInfo.WindowsProductName
     if (($Bit -like "64-bit") -and ($ProductName -like "Windows 10 Enterpise")) {
         $true
     }

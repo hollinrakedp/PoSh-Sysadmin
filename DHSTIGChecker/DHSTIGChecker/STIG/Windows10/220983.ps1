@@ -22,9 +22,9 @@ Administrators
 
 #>
 
-$GrantedPrivilege = ($CurrentSecPolicy.SeTakeOwnershipPrivilege -split ',').trimstart('*')
+$GrantedPrivilege = ($Script:CurrentSecPolicy.SeTakeOwnershipPrivilege -split ',').trimstart('*')
 
-$Allowed = @($SIDLocalGroup.Administrators)
+$Allowed = @($Script:SIDLocalGroup.Administrators)
 
 $Local:Results = @()
 

@@ -24,9 +24,9 @@ If the organization has an "Auditors" group the assignment of this group to the 
 
 #>
 
-$GrantedPrivilege = ($CurrentSecPolicy.SeSecurityPrivilege -split ',').trimstart('*')
+$GrantedPrivilege = ($Script:CurrentSecPolicy.SeSecurityPrivilege -split ',').trimstart('*')
 
-$Allowed = @($SIDLocalGroup.Administrators)
+$Allowed = @($Script:SIDLocalGroup.Administrators)
 
 $Local:Results = @()
 

@@ -24,8 +24,8 @@ Value: 0x00000006 (6) or greater
 
 #>
 
-if ($isVDI) {
-    if (!($VDIPersist)) {
+if ($Script:isVDI) {
+    if (!($Script:VDIPersist)) {
         Write-Verbose "This check does not apply: Reason - Non-Persistent VDI"
         return "Not Applicable"
     }

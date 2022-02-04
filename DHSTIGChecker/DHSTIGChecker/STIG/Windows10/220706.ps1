@@ -39,7 +39,7 @@ v1809 (Build 17763)
 
 #>
 
-$EndOfSupport = switch ($ComputerInfo.WindowsVersion) {
+$EndOfSupport = switch ($Script:ComputerInfo.WindowsVersion) {
     1709 { Get-Date -Date "03-Oct-2020" }
     1803 { Get-Date -Date "11-May-2021" }
     1809 { Get-Date -Date "11-May-2021" }

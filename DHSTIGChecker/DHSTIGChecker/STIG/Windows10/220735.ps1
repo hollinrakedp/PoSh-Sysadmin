@@ -15,7 +15,7 @@ Verify the organization has a policy to turn off Bluetooth when not in use and p
 
 #>
 
-if ($HasBluetooth) {
+if ($Script:HasBluetooth) {
     "Not Reviewed"
 }
 else {

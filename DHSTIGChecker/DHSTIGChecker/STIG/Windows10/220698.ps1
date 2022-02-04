@@ -27,13 +27,13 @@ If a TPM is not found or is not ready for use, this is a finding.
 
 #>
 
-if (!($IsDomainJoined)) {
+if (!($Script:IsDomainJoined)) {
     Write-Verbose "This check does not apply: Reason - Not Domain-Joined"
     return "Not Applicable"
 }
 
-if ($isVDI) {
-    if (!($VDIPersist)) {
+if ($Script:isVDI) {
+    if (!($Script:VDIPersist)) {
         Write-Verbose "This check does not apply: Reason - Non-Persistent VDI"
         return "Not Applicable"
     }

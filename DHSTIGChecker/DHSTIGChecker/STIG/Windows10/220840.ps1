@@ -25,7 +25,7 @@ Value: 0x00000001 (1)
 
 #>
 
-if ($IsClassified) {
+if ($Script:IsClassified) {
     Write-Verbose "This check does not apply: Reason - Not an Unclassified System"
     return "Not Applicable"
 }

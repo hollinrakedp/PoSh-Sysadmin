@@ -20,7 +20,7 @@ If any groups or accounts are granted the "Lock pages in memory" user right, thi
 
 #>
 
-if ($null -eq $CurrentSecPolicy.SeLockMemoryPrivilege) {
+if ($null -eq $Script:CurrentSecPolicy.SeLockMemoryPrivilege) {
     $true
 }
 else {

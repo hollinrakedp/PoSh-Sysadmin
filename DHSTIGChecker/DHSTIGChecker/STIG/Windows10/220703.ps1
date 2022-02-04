@@ -51,14 +51,14 @@ https://docs.microsoft.com/en-us/windows/security/information-protection/bitlock
 
 #>
 
-if ($isVDI) {
-    if (!($VDIPersist)) {
+if ($Script:isVDI) {
+    if (!($Script:VDIPersist)) {
         Write-Verbose "This check does not apply: Reason - Non-Persistent VDI"
         return "Not Applicable"
     }
 }
 
-$Results = @()
+$Local:Results = @()
 
 $Params = @{
     Path = "HKLM:\SOFTWARE\Policies\Microsoft\FVE\"
@@ -66,7 +66,7 @@ $Params = @{
     ExpectedValue = 1
 }
 
-$Results += Compare-RegKeyValue @Params
+$Local:Results += Compare-RegKeyValue @Params
 
 $ValidValues = 1, 2
 $Check = @()
@@ -80,7 +80,7 @@ foreach ($Value in $ValidValues) {
     $Check += Compare-RegKeyValue @Params
 }
 
-$Results += switch ($Check -contains $true) {
+$Local:Results += switch ($Check -contains $true) {
     True { $true }
     False { $false }
 }
@@ -97,12 +97,12 @@ foreach ($Value in $ValidValues) {
     $Check += Compare-RegKeyValue @Params
 }
 
-$Results += switch ($Check -contains $true) {
+$Local:Results += switch ($Check -contains $true) {
     True { $true }
     False { $false }
 }
 
-if ($Results -contains $false) {
+if ($Local:Results -contains $false) {
     $false
 }
 else {

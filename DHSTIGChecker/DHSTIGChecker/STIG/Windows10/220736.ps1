@@ -18,7 +18,7 @@ If "Alert me when a new Bluetooth device wants to connect" is not checked, this 
 
 #>
 
-if ($HasBluetooth) {
+if ($Script:HasBluetooth) {
     "Not Reviewed"
 }
 else {

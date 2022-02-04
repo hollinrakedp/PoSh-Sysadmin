@@ -28,7 +28,11 @@ Value:  1 (or if the Value Name does not exist)
 
 #>
 
-#Or Name does not exist
+if (!($Script:IsDomainJoined)) {
+    Write-Verbose "This check does not apply: Reason - Not Domain-Joined"
+    return "Not Applicable"
+}
+
 $Params = @{
     Path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters\"
     Name = "DevicePKInitEnabled"

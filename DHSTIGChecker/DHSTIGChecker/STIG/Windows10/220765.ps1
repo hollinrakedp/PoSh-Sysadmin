@@ -28,7 +28,7 @@ Some virtual machines may generate excessive audit events for access to the virt
 $Local:Category = "Removable Storage"
 $Local:Setting = "Failure"
 
-$Local:AuditSetting = $AuditPolicy | Where-Object {$_.Subcategory -contains "$Local:Category"}
+$Local:AuditSetting = $Script:AuditPolicy | Where-Object {$_.Subcategory -contains "$Local:Category"}
 
 if ($Local:AuditSetting.'Inclusion Setting' -match $Local:Setting) {
     $true

@@ -24,12 +24,12 @@ Policy Change  >> Other Policy Change Events - Success
 
 #>
 
-$Category = "Other Policy Change Events"
-$Setting = "Success"
+$Local:Category = "Other Policy Change Events"
+$Local:Setting = "Success"
 
-$AuditSetting = $Script:AuditPolicy | Where-Object {$_.Subcategory -contains "$Category"}
+$Local:AuditSetting = $Script:AuditPolicy | Where-Object {$_.Subcategory -contains "$Local:Category"}
 
-if ($AuditSetting.'Inclusion Setting' -match $Setting) {
+if ($Local:AuditSetting.'Inclusion Setting' -match $Local:Setting) {
     $true
 }
 else {

@@ -62,8 +62,8 @@ NOTE:  The severity level for the requirement will be upgraded to CAT II startin
 
 #>
 
-if ($isVDI) {
-    if (!($VDIPersist)) {
+if ($Script:isVDI) {
+    if (!($Script:VDIPersist)) {
         Write-Verbose "This check does not apply: Reason - Non-Persistent VDI"
         return "Not Applicable"
     }
@@ -73,8 +73,8 @@ if ($isVDI) {
 if ($Script:DeviceGuard.VirtualizationBasedSecurityStatus -eq 2) {
     Write-Verbose "Device Guard Virtualization based security: Running"
     $Local:Results = @()
-    $ValidValues = 2, 3
-    foreach ($Value in $ValidValues) {
+    $Local:ValidValues = 2, 3
+    foreach ($Value in $Local:ValidValues) {
         $Local:Results += $Script:DeviceGuard.RequiredSecurityProperties -contains $Value
     }
     if ($Local:Results -contains $true) {

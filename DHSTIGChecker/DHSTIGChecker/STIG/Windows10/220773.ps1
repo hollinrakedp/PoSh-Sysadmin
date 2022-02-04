@@ -26,7 +26,7 @@ System >> Other System Events - Success
 $Local:Category = "Other System Events"
 $Local:Setting = "Success"
 
-$Local:AuditSetting = $AuditPolicy | Where-Object {$_.Subcategory -contains "$Local:Category"}
+$Local:AuditSetting = $Script:AuditPolicy | Where-Object {$_.Subcategory -contains "$Local:Category"}
 
 if ($Local:AuditSetting.'Inclusion Setting' -match $Local:Setting) {
     $true

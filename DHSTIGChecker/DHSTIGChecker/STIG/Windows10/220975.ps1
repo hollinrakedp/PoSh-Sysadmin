@@ -25,12 +25,12 @@ SERVICE
 
 #>
 
-$GrantedPrivilege = ($CurrentSecPolicy.SeImpersonatePrivilege -split ',').trimstart('*')
+$GrantedPrivilege = ($Script:CurrentSecPolicy.SeImpersonatePrivilege -split ',').trimstart('*')
 
-$Allowed = @($SIDLocalGroup.Administrators,
-    $SIDLocalGroup.LocalService,
-    $SIDLocalGroup.NetworkService,
-    $SIDLocalGroup.Service
+$Allowed = @($Script:SIDLocalGroup.Administrators,
+    $Script:SIDLocalGroup.LocalService,
+    $Script:SIDLocalGroup.NetworkService,
+    $Script:SIDLocalGroup.Service
 )
 
 $Local:Results = @()

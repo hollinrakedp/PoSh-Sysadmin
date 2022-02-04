@@ -26,8 +26,8 @@ NOTE: An alternate encryption application may be used in lieu of BitLocker provi
 
 #>
 
-if ($IsVDI) {
-    if (!($VDIPersist)) {
+if ($Script:IsVDI) {
+    if (!($Script:VDIPersist)) {
         Write-Verbose "This check does not apply: Reason - Non-Persistent VDI"
         return "Not Applicable"
     }

@@ -55,7 +55,7 @@ Value: 0x00000002 (2)
 
 # Not checking for LTSB
 
-if ($IsClassified) {
+if ($Script:IsClassified) {
     Write-Verbose "This check does not apply: Reason - Not an Unclassified System"
     return "Not Applicable"
 }

@@ -57,7 +57,7 @@ NotAfter: 8/26/2022 9:07:50 AM
 
 #>
 
-if ($IsClassified) {
+if ($Script:IsClassified) {
     Write-Verbose "This check does not apply: Reason - Not an Unclassified System"
     return "Not Applicable"
 }
@@ -67,9 +67,9 @@ else {
         "AF132AC65DE86FC4FB3FE51FD637EBA0FF0B12A9"
     )
 
-    $Local:Result = Compare-Object -DifferenceObject $Certs.Thumbprint -ReferenceObject $Thumbprints -IncludeEqual -ExcludeDifferent
+    $Local:Results = Compare-Object -DifferenceObject $Certs.Thumbprint -ReferenceObject $Thumbprints -IncludeEqual -ExcludeDifferent
 
-    if ($Local:Result.count -eq $Thumbprints.Count) {
+    if ($Local:Results.count -eq $Thumbprints.Count) {
         $true
     }
     else {

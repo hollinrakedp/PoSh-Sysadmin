@@ -20,7 +20,7 @@ If any groups or accounts are granted the "Enable computer and user accounts to 
 
 #>
 
-if ($null -eq $CurrentSecPolicy.SeEnableDelegationPrivilege) {
+if ($null -eq $Script:CurrentSecPolicy.SeEnableDelegationPrivilege) {
     $true
 }
 else {

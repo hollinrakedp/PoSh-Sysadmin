@@ -28,7 +28,7 @@ Additional entries would not be a finding.
 
 #>
 
-if (!($IsDomainJoined)) {
+if (!($Script:IsDomainJoined)) {
     Write-Verbose "This check does not apply: Reason - Not Domain-Joined"
     return "Not Applicable"
 }

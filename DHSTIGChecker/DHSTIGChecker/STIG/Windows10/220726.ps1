@@ -17,7 +17,7 @@ If the value for "nx" is not "OptOut", this is a finding.
 
 #>
 
-switch ($ComputerInfo.OsDataExecutionPreventionSupportPolicy) {
+switch ($Script:ComputerInfo.OsDataExecutionPreventionSupportPolicy) {
     OptOut { $true }
     AlwaysOn { $true }
     Default { $false }

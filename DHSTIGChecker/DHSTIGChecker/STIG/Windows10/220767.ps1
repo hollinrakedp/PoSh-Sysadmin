@@ -26,7 +26,7 @@ Policy Change >> Audit Policy Change - Success
 $Local:Category = "Audit Policy Change"
 $Local:Setting = "Success"
 
-$Local:AuditSetting = $AuditPolicy | Where-Object {$_.Subcategory -contains "$Local:Category"}
+$Local:AuditSetting = $Script:AuditPolicy | Where-Object {$_.Subcategory -contains "$Local:Category"}
 
 if ($Local:AuditSetting.'Inclusion Setting' -match $Local:Setting) {
     $true

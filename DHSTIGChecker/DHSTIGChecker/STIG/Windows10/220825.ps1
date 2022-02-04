@@ -23,6 +23,8 @@ Value: 0x00000001 (1)
 
 #>
 
+#Does not check LTSB
+
 $Params = @{
     Path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\"
     Name = "MSAOptional"

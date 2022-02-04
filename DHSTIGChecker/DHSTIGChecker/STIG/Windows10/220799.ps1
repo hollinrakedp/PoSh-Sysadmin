@@ -25,7 +25,7 @@ Value: 0x00000000 (0)
 
 #>
 
-if (!($IsDomainJoined)) {
+if (!($Script:IsDomainJoined)) {
     Write-Verbose "This check does not apply: Reason - Not Domain-Joined"
     return "Not Applicable"
 }

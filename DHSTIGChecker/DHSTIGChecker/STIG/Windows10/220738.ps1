@@ -14,7 +14,7 @@ Ensure there is a documented policy or procedure in place that non-persistent VM
 If there is no such documented policy or procedure in place, this is a finding.
 
 #>
-if ($isVDI -and !$VDIPersist) {
+if ($Script:isVDI -and !$Script:VDIPersist) {
     return "Not Reviewed"
 }
 else {
