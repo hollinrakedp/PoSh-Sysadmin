@@ -36,7 +36,7 @@ function Compare-RegKeyValue {
         [Parameter(Mandatory)]
         $ExpectedValue,
         [Parameter()]
-        [ValidateSet("like", "ge", "le")]
+        [ValidateSet("like", "ge", "le", "ne")]
         $Comparison = "like"
     )
 
@@ -49,6 +49,7 @@ function Compare-RegKeyValue {
             like { $CurrentValue.$Name -like $ExpectedValue }
             ge { $CurrentValue.$Name -ge $ExpectedValue }
             le { $CurrentValue.$Name -le $ExpectedValue }
+            ne { $CurrentValue.$Name -ne $ExpectedValue }
         }
     }
     else {
