@@ -43,3 +43,37 @@ Value: 0x00000000 (0) - Off
 0x00000001 (1) - LAN
 
 #>
+
+#Does not check LTSB
+
+if ($IsDomainJoined) {
+    $Params = @{
+        Path          = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization\"
+        Name          = "DODownloadMode"
+        ExpectedValue = 3
+        Comparison    = 'ne'
+    }
+
+    Compare-RegKeyValue @Params
+}
+else {
+    $Local:Results = @()
+    $ValidValues = 0, 1
+
+    foreach ($Value in $ValidValues) {
+        $Params = @{
+            Path          = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config\"
+            Name          = "DODownloadMode"
+            ExpectedValue = $Value
+        }
+    
+        $Local:Results += Compare-RegKeyValue @Params
+    }
+
+    if ($Local:Results -contains $true) {
+        $true
+    }
+    else {
+        $false
+    }
+}

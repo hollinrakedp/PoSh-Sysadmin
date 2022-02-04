@@ -45,7 +45,7 @@ Click "OK".
 
 Expand "Certificates" and navigate to "Untrusted Certificates >> Certificates".
 
-For each certificate with "DoD Root CA…" under "Issued To" and "DoD Interoperability Root CA…" under "Issued By":
+For each certificate with "DoD Root CAï¿½" under "Issued To" and "DoD Interoperability Root CAï¿½" under "Issued By":
 
 Right-click on the certificate and select "Open".
 
@@ -66,3 +66,24 @@ Thumbprint: AC06108CA348CC03B53795C64BF84403C1DBD341
 Valid to: Saturday, January 22, 2022
 
 #>
+
+if ($IsClassified) {
+    Write-Verbose "This check does not apply: Reason - Not an Unclassified System"
+    return "Not Applicable"
+}
+else {
+    $Certs = Get-ChildItem -Path "Cert:\LocalMachine\Disallowed\"
+    $Thumbprints = @(
+        "A8C27332CCB4CA49554CE55D34062A7DD2850C02",
+        "AC06108CA348CC03B53795C64BF84403C1DBD341"
+    )
+
+    $Local:Result = Compare-Object -DifferenceObject $Certs.Thumbprint -ReferenceObject $Thumbprints -IncludeEqual -ExcludeDifferent
+
+    if ($Local:Result.count -eq $Thumbprints.Count) {
+        $true
+    }
+    else {
+        $false
+    }
+}
