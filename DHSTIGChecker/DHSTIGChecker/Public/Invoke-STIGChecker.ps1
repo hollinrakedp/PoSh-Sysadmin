@@ -72,7 +72,7 @@ function Invoke-STIGChecker {
         }
         $STIGs = Get-ChildItem "$STIGRootPath/$Name"
 
-        $STIGResults = @()
+        $VulnResults = @()
 
         #Initialize Counters
         [int]$STIGCounter = 0
@@ -92,24 +92,58 @@ function Invoke-STIGChecker {
             Write-Verbose "$($STIG.FullName)"
             [string]$result = . $STIG.FullName
             switch ($result) {
-                True { $STIGCounterNF++ }
-                False { $STIGCounterO++ }
+                True {
+                    $STIGCounterNF++
+                    $result = 'Not a Finding'
+                }
+                False {
+                    $STIGCounterO++
+                    $result = 'Open'
+                }
                 'Not Applicable' { $STIGCounterNA++ }
                 'Not Reviewed' { $STIGCounterNR++ }
             }
-            $STIGResults += [PSCustomObject]@{
+            $VulnResults += [PSCustomObject]@{
                 VulnID = $($STIG.BaseName)
                 Result = $result
             }
         }
-    }
-    
-    end {
+
         Write-Verbose "Completed:       $STIGCounter"
         Write-Verbose "Open:            $STIGCounterO ($([math]::Round($($STIGCounterO/$STIGCounter*100)))%)"
         Write-Verbose "Not a Finding:   $STIGCounterNF ($([math]::Round($($STIGCounterNF/$STIGCounter*100)))%)"
         Write-Verbose "Not Reviewed:    $STIGCounterNR ($([math]::Round($($STIGCounterNR/$STIGCounter*100)))%)"
         Write-Verbose "Not Applicable:  $STIGCounterNA ($([math]::Round($($STIGCounterNR/$STIGCounter*100)))%)"
-        $STIGResults
+        
+        #$VulnResults #| Group-Object -Property Result
+        
+        $ResultsCount = @{
+            'Total Checks'   = $STIGCounter
+            'Not Applicable' = $STIGCounterNA
+            Open             = $STIGCounterO
+            'Not a Finding'  = $STIGCounterNF
+            'Not Reviewed'   = $STIGCounterNR
+        }
+
+        $ResultsStatus = @{
+            'Not Applicable' = ($VulnResults | Where-Object {$_.Result -eq 'Not Applicable'}).VulnID
+            Open             = ($VulnResults | Where-Object {$_.Result -eq 'Open'}).VulnID
+            'Not a Finding'  = ($VulnResults | Where-Object {$_.Result -eq 'Not a Finding'}).VulnID
+            'Not Reviewed'   = ($VulnResults | Where-Object {$_.Result -eq 'Not Reviewed'}).VulnID
+        }
+
+        $STIGCheckerResults = @{
+            ComputerName        = $env:COMPUTERNAME
+            STIG                = $Name
+            'Results Count'     = $ResultsCount
+            'Results By Status' = $ResultsStatus
+            Data                = $VulnResults
+        }
+
+        $STIGCheckerResults
+    }
+    
+    end {
+        
     }
 }
