@@ -30,7 +30,7 @@ If "Windows PowerShell 2.0" (whether the subcategory of "Windows PowerShell 2.0 
 
 #>
 
-$PowerShellv2 = Get-WindowsOptionalFeature -Online | Where-Object {$_.FeatureName -like "*PowerShellv2*"}
+$PowerShellv2 = Get-WindowsOptionalFeature -Online -Verbose:$false | Where-Object {$_.FeatureName -like "*PowerShellv2*"}
 
 if ($PowerShellv2.State -contains 'Enabled') {
     $false

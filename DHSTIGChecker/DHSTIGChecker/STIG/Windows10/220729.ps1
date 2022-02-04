@@ -29,7 +29,7 @@ If "SMB 1.0/CIFS File Sharing Support" is selected, this is a finding.
 
 #>
 
-$Local:Feature = Get-WindowsOptionalFeature -Online -FeatureName "SMB1Protocol"
+$Local:Feature = Get-WindowsOptionalFeature -Online -Verbose:$false -FeatureName "SMB1Protocol"
 
 if ($Local:Feature.State -contains 'Enabled') {
     $false
