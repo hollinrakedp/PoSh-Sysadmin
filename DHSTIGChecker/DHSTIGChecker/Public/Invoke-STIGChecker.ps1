@@ -114,7 +114,7 @@ function Invoke-STIGChecker {
         Write-Verbose "Open:            $STIGCounterO ($([math]::Round($($STIGCounterO/$STIGCounter*100)))%)"
         Write-Verbose "Not a Finding:   $STIGCounterNF ($([math]::Round($($STIGCounterNF/$STIGCounter*100)))%)"
         Write-Verbose "Not Reviewed:    $STIGCounterNR ($([math]::Round($($STIGCounterNR/$STIGCounter*100)))%)"
-        Write-Verbose "Not Applicable:  $STIGCounterNA ($([math]::Round($($STIGCounterNR/$STIGCounter*100)))%)"
+        Write-Verbose "Not Applicable:  $STIGCounterNA ($([math]::Round($($STIGCounterNA/$STIGCounter*100)))%)"
         
         #$VulnResults #| Group-Object -Property Result
         
