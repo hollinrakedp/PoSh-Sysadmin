@@ -1,4 +1,23 @@
 function Get-STIGComputerInfo {
+    <#
+    .SYNOPSIS
+    Retreive computer information needed for STIG checks.
+
+    .DESCRIPTION
+    This function will retreive information from the local system needed to perform the requested STIG checks.
+
+    .NOTES
+    Name         - Get-STIGComputerInfo
+    Version      - 0.3
+    Author       - Darren Hollinrake
+    Date Created - 2022-01-16
+    Date Updated - 2022-02-04
+
+    .EXAMPLE
+    Get-STIGComputerInfo
+    
+    #>
+
     [CmdletBinding()]
     param (
         
