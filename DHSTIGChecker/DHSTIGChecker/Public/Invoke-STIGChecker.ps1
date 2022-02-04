@@ -39,10 +39,11 @@ function Invoke-STIGChecker {
         Remove-Item .\currentsecpolicy.txt
         
         $AuditPolicy = Get-AdvancedAuditPolicy | Select-Object 'Subcategory', 'Inclusion Setting'
-
         $HasBluetooth = Test-HasBluetooth
-
         $DeviceGuard = Get-DeviceGuard
+        $IsClassified = $EnvConfig.IsClassified
+        $IsVDI = $EnvConfig.IsVDI
+        $VDINonPersist = $EnvConfig.VDINonPersist
 
         $SIDLocalGroup = @{
             Administrators     = "S-1-5-32-544"
@@ -135,6 +136,10 @@ function Invoke-STIGChecker {
         $STIGCheckerResults = @{
             ComputerName        = $env:COMPUTERNAME
             STIG                = $Name
+            Classified          = $IsClassified
+            'Domain Joined'     = $IsDomainJoined
+            'VDI System'        = $IsVDI
+            'Persistent VDI'    = $VDINonPersist
             'Results Count'     = $ResultsCount
             'Results By Status' = $ResultsStatus
             Data                = $VulnResults
