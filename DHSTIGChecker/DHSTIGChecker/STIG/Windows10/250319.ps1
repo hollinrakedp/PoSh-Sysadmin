@@ -27,3 +27,28 @@ Value: RequireMutualAuthentication=1, RequireIntegrity=1
 Additional entries would not be a finding.
 
 #>
+
+if (!($IsDomainJoined)) {
+    Write-Verbose "This check does not apply: Reason - Not Domain-Joined"
+    return "Not Applicable"
+}
+
+$Local:Results = @()
+$Local:Names = '\\*\NETLOGON', '\\*\SYSVOL'
+
+foreach ($Name in $Local:Names) {
+    $Params = @{
+        Path          = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths\"
+        Name          = "$Name"
+        ExpectedValue = "RequireMutualAuthentication=1, RequireIntegrity=1"
+    }
+        
+    $Local:Results += Compare-RegKeyValue @Params
+}
+
+if ($Local:Results -contains $false) {
+    $false
+}
+else {
+    $true
+}

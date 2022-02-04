@@ -17,8 +17,20 @@ On the local domain joined workstation:
 
 Open "PowerShell".
 
-Enter "Get-LocalUser –Name * | Select-Object *”
+Enter "Get-LocalUser ï¿½Name * | Select-Object *ï¿½
 
 If the "PasswordLastSet" date is greater than "60" days old for the local Administrator account for administering the computer/domain, this is a finding.
 
 #>
+
+# Checking all accounts not just members of Administrators
+
+$AcctStalePW = Get-LocalUser | Where-Object { ($_.Enabled -eq $true) -and ($_.PasswordLastSet -le $(Get-Date).AddDays(-60))}
+
+if ($AcctStalePW) {
+    Write-Verbose "This check failed: Reason - Found Account(s) with stale password: $($AcctStalePW.Name -join ', ')"
+    $false
+}
+else {
+    $true
+}

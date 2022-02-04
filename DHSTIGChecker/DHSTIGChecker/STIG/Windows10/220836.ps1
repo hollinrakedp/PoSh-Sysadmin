@@ -52,3 +52,37 @@ Value Type: REG_DWORD
 Value: 0x00000002 (2)
 
 #>
+
+# Not checking for LTSB
+
+if ($IsClassified) {
+    Write-Verbose "This check does not apply: Reason - Not an Unclassified System"
+    return "Not Applicable"
+}
+
+$Local:Results = @()
+
+$Params = @{
+    Path          = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System\"
+    Name          = "EnableSmartScreen"
+    ExpectedValue = 1
+}
+    
+$Local:Results += Compare-RegKeyValue @Params
+
+$Params = @{
+    Path          = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System\"
+    Name          = "ShellSmartScreenLevel"
+    ExpectedValue = "Block"
+}
+    
+$Local:Results += Compare-RegKeyValue @Params
+
+    
+
+if ($Local:Results -contains $false) {
+    $false
+}
+else {
+    $true
+}
