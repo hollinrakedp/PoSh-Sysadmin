@@ -21,3 +21,25 @@ If any groups or accounts other than the following are granted the "Take ownersh
 Administrators
 
 #>
+
+$GrantedPrivilege = ($CurrentSecPolicy.SeTakeOwnershipPrivilege -split ',').trimstart('*')
+
+$Allowed = @($SIDLocalGroup.Administrators)
+
+$Local:Results = @()
+
+foreach ($ID in $GrantedPrivilege) {
+    $Local:Results += if ($Allowed -contains $ID ) {
+        $true
+    }
+    else {
+        $false
+    }
+}
+
+if ($Local:Results -contains $false) {
+    $false
+}
+else {
+    $true
+}

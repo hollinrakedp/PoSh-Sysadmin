@@ -23,3 +23,25 @@ Administrators
 If the organization has an "Auditors" group the assignment of this group to the user right would not be a finding.
 
 #>
+
+$GrantedPrivilege = ($CurrentSecPolicy.SeSecurityPrivilege -split ',').trimstart('*')
+
+$Allowed = @($SIDLocalGroup.Administrators)
+
+$Local:Results = @()
+
+foreach ($ID in $GrantedPrivilege) {
+    $Local:Results += if ($Allowed -contains $ID ) {
+        $true
+    }
+    else {
+        $false
+    }
+}
+
+if ($Local:Results -contains $false) {
+    $false
+}
+else {
+    $true
+}

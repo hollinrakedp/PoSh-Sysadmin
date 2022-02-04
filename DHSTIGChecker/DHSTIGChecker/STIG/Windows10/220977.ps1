@@ -19,3 +19,10 @@ Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings 
 If any groups or accounts are granted the "Lock pages in memory" user right, this is a finding.
 
 #>
+
+if ($null -eq $CurrentSecPolicy.SeLockMemoryPrivilege) {
+    $true
+}
+else {
+    $false
+}

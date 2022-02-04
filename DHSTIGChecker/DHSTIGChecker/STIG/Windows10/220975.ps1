@@ -24,3 +24,29 @@ NETWORK SERVICE
 SERVICE
 
 #>
+
+$GrantedPrivilege = ($CurrentSecPolicy.SeImpersonatePrivilege -split ',').trimstart('*')
+
+$Allowed = @($SIDLocalGroup.Administrators,
+    $SIDLocalGroup.LocalService,
+    $SIDLocalGroup.NetworkService,
+    $SIDLocalGroup.Service
+)
+
+$Local:Results = @()
+
+foreach ($ID in $GrantedPrivilege) {
+    $Local:Results += if ($Allowed -contains $ID ) {
+        $true
+    }
+    else {
+        $false
+    }
+}
+
+if ($Local:Results -contains $false) {
+    $false
+}
+else {
+    $true
+}

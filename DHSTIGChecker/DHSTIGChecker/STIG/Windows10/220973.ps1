@@ -19,3 +19,10 @@ Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings 
 If any groups or accounts are granted the "Enable computer and user accounts to be trusted for delegation" user right, this is a finding.
 
 #>
+
+if ($null -eq $CurrentSecPolicy.SeEnableDelegationPrivilege) {
+    $true
+}
+else {
+    $false
+}
