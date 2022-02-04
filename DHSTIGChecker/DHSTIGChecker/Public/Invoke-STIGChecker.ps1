@@ -34,18 +34,18 @@ function Invoke-STIGChecker {
         }
 
         SecEdit.exe /Export  /cfg currentsecpolicy.txt | Out-Null
-        $CurrentSecPolicy = @{}
+        $Script:CurrentSecPolicy = @{}
         Get-Content .\currentsecpolicy.txt | Where-Object { ($_ -match '=') -and ($_ -notmatch 'MACHINE') } | ForEach-Object { $Script:CurrentSecPolicy += ConvertFrom-StringData $_ }
         Remove-Item .\currentsecpolicy.txt
         
-        $AuditPolicy = Get-AdvancedAuditPolicy | Select-Object 'Subcategory', 'Inclusion Setting'
-        $HasBluetooth = Test-HasBluetooth
-        $DeviceGuard = Get-DeviceGuard
-        $IsClassified = $EnvConfig.IsClassified
-        $IsVDI = $EnvConfig.IsVDI
-        $VDINonPersist = $EnvConfig.VDINonPersist
+        $Script:AuditPolicy = Get-AdvancedAuditPolicy | Select-Object 'Subcategory', 'Inclusion Setting'
+        $Script:HasBluetooth = Test-HasBluetooth
+        $Script:DeviceGuard = Get-DeviceGuard
+        $Script:IsClassified = $EnvConfig.IsClassified
+        $Script:IsVDI = $EnvConfig.IsVDI
+        $Script:VDINonPersist = $EnvConfig.VDINonPersist
 
-        $SIDLocalGroup = @{
+        $Script:SIDLocalGroup = @{
             Administrators     = "S-1-5-32-544"
             Users              = "S-1-5-32-545"
             Guests             = "S-1-5-32-546"
@@ -56,13 +56,13 @@ function Invoke-STIGChecker {
             LocalAccount       = "S-1-5-113"
         }
 
-        $IsDomainJoined = $ComputerInfo.CsPartOfDomain
+        $Script:IsDomainJoined = $ComputerInfo.CsPartOfDomain
 
-        if ($IsDomainJoined) {
+        if ($Script:IsDomainJoined) {
             Write-Verbose "System is joined to a Domain."
             Write-Verbose "Gathering needed Domain SIDs."
             try {
-                $SIDDomainGroup = @{
+                $Script:SIDDomainGroup = @{
                     DomainAdmins     = $(Get-ADSIGroupSID -sAMAccountName 'Domain Admins')
                     EnterpriseAdmins = $(Get-ADSIGroupSID -sAMAccountName 'Enterprise Admins')
                 }
@@ -110,7 +110,7 @@ function Invoke-STIGChecker {
             }
         }
 
-        Write-Verbose "Completed:       $STIGCounter"
+        Write-Verbose "Total Checks:    $STIGCounter"
         Write-Verbose "Open:            $STIGCounterO ($([math]::Round($($STIGCounterO/$STIGCounter*100)))%)"
         Write-Verbose "Not a Finding:   $STIGCounterNF ($([math]::Round($($STIGCounterNF/$STIGCounter*100)))%)"
         Write-Verbose "Not Reviewed:    $STIGCounterNR ($([math]::Round($($STIGCounterNR/$STIGCounter*100)))%)"
@@ -136,10 +136,10 @@ function Invoke-STIGChecker {
         $STIGCheckerResults = @{
             ComputerName        = $env:COMPUTERNAME
             STIG                = $Name
-            Classified          = $IsClassified
-            'Domain Joined'     = $IsDomainJoined
-            'VDI System'        = $IsVDI
-            'Persistent VDI'    = $VDINonPersist
+            Classified          = $Script:IsClassified
+            'Domain Joined'     = $Script:IsDomainJoined
+            'VDI System'        = $Script:IsVDI
+            'Persistent VDI'    = $Script:VDINonPersist
             'Results Count'     = $ResultsCount
             'Results By Status' = $ResultsStatus
             Data                = $VulnResults
