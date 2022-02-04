@@ -18,5 +18,6 @@ if ($isVDI -and !$VDIPersist) {
     return "Not Reviewed"
 }
 else {
+    Write-Verbose "This check does not apply: Reason - Not a Non-Persistent VDI System"
     return "Not Applicable"
 }

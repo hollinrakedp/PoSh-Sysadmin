@@ -28,7 +28,8 @@ Value: 0x00000000 (0)
 $Local:AppliesTo = '1507','1511','1607', '1703', '1709'
 
 if (!($Local:AppliesTo -contains $ComputerInfo.WindowsVersion)) {
-    'Not Applicable'
+    Write-Verbose "This check does not apply: Reason - Version is not < 1709"
+    return 'Not Applicable'
 }
 else {
     $Params = @{

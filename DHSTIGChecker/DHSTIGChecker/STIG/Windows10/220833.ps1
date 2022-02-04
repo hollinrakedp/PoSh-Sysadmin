@@ -26,6 +26,7 @@ Value: 0x00000001 (1)
 #>
 
 if ($Script:ComputerInfo.WindowsVersion -lt 1709) {
+    Write-Verbose "This check does not apply: Reason - Version is < 1709"
     return 'Not Applicable'
 }
 
