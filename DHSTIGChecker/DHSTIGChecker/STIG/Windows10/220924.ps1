@@ -38,7 +38,7 @@ foreach ($Value in $Local:ValidValues) {
     $Local:Results += Compare-RegKeyValue @Params
 }
 
-if ($Local:Results -contains "Not a Finding") {
+if ($Local:Results -contains $true) {
     $true
 }
 else {
