@@ -47,16 +47,16 @@ if ($TPM.Present) {
             $true
         }
         else {
-            Write-Verbose "Reason: TPM Not Enabled"
+            Write-Verbose "This check does not apply: Reason - TPM Not Enabled"
             $false
         }
     }
     else {
-        Write-Verbose "Reason: TPM Not Ready"
+        Write-Verbose "This check does not apply: Reason - TPM Not Ready"
         $false
     }
 }
 else {
-    Write-Verbose "Reason: TPM Not Present"
+    Write-Verbose "This check does not apply: Reason - TPM Not Present"
     $false
 }
