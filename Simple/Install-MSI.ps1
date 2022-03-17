@@ -22,7 +22,7 @@ function Install-MSI {
         [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$NoRestart,
         [Parameter(ValueFromPipelineByPropertyName)]
-        [string]$LogPath = "C:\Tenp\Logs"
+        [string]$LogPath = "C:\Temp\Logs"
     )
 
     begin {
