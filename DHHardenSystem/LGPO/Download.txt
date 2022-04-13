@@ -1,3 +1,0 @@
-https://www.microsoft.com/en-us/download/details.aspx?id=55319
-
-Download the LGPO.exe tool from the above link and place it in this directory.
