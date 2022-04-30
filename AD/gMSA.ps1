@@ -3,9 +3,9 @@
 
 # This command only needs to be ran once in the Forest
 # If you have only one DC
-#Add-KDSRootKey –EffectiveTime ((get-date).addhours(-10))
+Add-KDSRootKey –EffectiveTime ((get-date).addhours(-10))
 # If you have more than one DC, wait 10hrs for full replication
-Add-KDSRootKey –EffectiveImmediately
+Add-KDSRootKey -EffectiveImmediately
 
 # Create a security group to hold the computer objects that will be allowed access to the gMSA
 # Security Group: SEC_gMSA_Audit
