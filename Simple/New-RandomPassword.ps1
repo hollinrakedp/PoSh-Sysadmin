@@ -5,5 +5,6 @@ function New-RandomPassword {
         [Parameter()]
         [Int]$NonAlphaNum = 2
     )
+    Add-Type -AssemblyName System.Web
     [System.Web.Security.Membership]::GeneratePassword($Length, $NonAlphaNum)
 }
