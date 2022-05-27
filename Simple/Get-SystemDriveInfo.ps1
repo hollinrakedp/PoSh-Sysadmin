@@ -3,7 +3,7 @@ Function Get-SystemDriveInfo {
     param()
     begin {}
     process {
-        $LogicalDisk = Get-CimInstance -ClassName Win32_LogicalDisk | Select-Object SystemName, DeviceID, Size, FreeSpace, DriveType
+        $LogicalDisk = Get-CimInstance -ClassName Win32_LogicalDisk | Select-Object SystemName, VolumeName, DeviceID, Size, FreeSpace, DriveType
 
         foreach ($Disk in $LogicalDisk) {
             $DriveType = switch ($Disk.DriveType) {
@@ -18,6 +18,7 @@ Function Get-SystemDriveInfo {
 
             $DiskInfo = [PSCustomObject]@{
                 ComputerName = $Disk.SystemName
+                VolumeName   = $Disk.VolumeName
                 DriveType    = $DriveType
                 Device       = $Disk.DeviceID
                 'Size (GB)'  = $Disk.Size / 1gb -as [int]
