@@ -1,4 +1,4 @@
-function Get-DriveSpace {
+function Get-DiskDriveSpace {
     <#
     .SYNOPSIS
     Get information about disk drives on the local system or specified remote systems.
@@ -9,9 +9,9 @@ function Get-DriveSpace {
     Only local and removable disks are enumerated.
 
     .NOTES
-    Name        : Get-DriveSpace
+    Name        : Get-DiskDriveSpace
     Author      : Darren Hollinrake
-    Version     : 2.0
+    Version     : 2.1
     DateCreated : 2021-08-02
     DateUpdated : 2024-01-22
 
