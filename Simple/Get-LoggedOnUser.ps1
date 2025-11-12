@@ -5,13 +5,13 @@ function Get-LoggedOnUser {
 
     .DESCRIPTION
     This is a wrapper function for 'quser' to output the results as a PowerShell object.
-    
+
     .NOTES
     Name        : Get-LoggedOnUser
     Author      : Darren Hollinrake
-    Version     : 1.1
+    Version     : 1.2
     Date Created: 2021-07-13
-    Date Updated: 2024-01-22
+    Date Updated: 2025-11-11
 
     .PARAMETER ComputerName
     Specifies the name of the computer or computers for which to retrieve user session information. If not specified, the local computer ($env:COMPUTERNAME) is used.
@@ -52,6 +52,7 @@ function Get-LoggedOnUser {
     Retrieves user session information from the specified servers.
 
     #>
+    [CmdletBinding()]
     param(
         [Parameter(
             ValueFromPipelineByPropertyName,
@@ -59,53 +60,60 @@ function Get-LoggedOnUser {
         [Alias("Name", "Server")]
         [string[]]$ComputerName = @("$env:COMPUTERNAME")
     )
-    foreach ($Computer in $ComputerName) {
-        $Users = $(& quser /Server:$ComputerName 2>&1)
-        if ($Users.GetType().Name -eq "ErrorRecord") {
-            [PSCustomObject]@{
-                ComputerName = $Computer
-                Username     = $null
-                SessionName  = $null
-                SessionId    = $null
-                State        = $null
-                IdleTime     = $null
-                LogonTime    = $null
-                $Duration    = $null
-            }
-        }
-        else {
-            $Users = $Users -replace '\s{2,}', ',' | ConvertFrom-Csv
-            $Time = Get-Date
-            foreach ($User in $Users) {
-                $UserHash = [ordered]@{
+
+    begin {}
+
+    process {
+        foreach ($Computer in $ComputerName) {
+            $Users = $(& quser /Server:$Computer 2>&1)
+            if ($Users.GetType().Name -eq "ErrorRecord") {
+                [PSCustomObject]@{
                     ComputerName = $Computer
-                    Username     = $User.USERNAME
+                    Username     = $null
+                    SessionName  = $null
+                    SessionId    = $null
+                    State        = $null
+                    IdleTime     = $null
+                    LogonTime    = $null
+                    Duration     = $null
                 }
-
-                if ($User.ID -eq "Disc") {
-                    # Disconnected sessions have no session name.
-                    $UserHash += @{
-                        SessionName = $null
-                        SessionId   = $User.SESSIONNAME
-                        State       = $User.ID
-                        IdleTime    = $User.STATE.replace('+', '.')
-                        LogonTime   = [datetime]$User.'IDLE TIME'
+            }
+            else {
+                $Users = $Users -replace '\s{2,}', ',' | ConvertFrom-Csv
+                $Time = Get-Date
+                foreach ($User in $Users) {
+                    $UserHash = [ordered]@{
+                        ComputerName = $Computer
+                        Username     = $User.USERNAME
                     }
-                }
-                else {
-                    $UserHash += @{
-                        SessionName = $User.SESSIONNAME
-                        SessionId   = $User.ID
-                        State       = $User.STATE
-                        IdleTime    = $User.'IDLE TIME'.replace('+', '.')
-                        LogonTime   = [datetime]$User.'LOGON TIME'
-                    }
-                }
 
-                $Duration = (New-TimeSpan -Start $UserHash.LogonTime -End $Time).ToString("dd\:hh\:mm")
-                $UserHash += @{Duration = $Duration }
-                [PSCustomObject]$UserHash
+                    if ($User.ID -eq "Disc") {
+                        # Disconnected sessions have no session name.
+                        $UserHash += @{
+                            SessionName = $null
+                            SessionId   = $User.SESSIONNAME
+                            State       = $User.ID
+                            IdleTime    = $User.STATE.replace('+', '.')
+                            LogonTime   = [datetime]$User.'IDLE TIME'
+                        }
+                    }
+                    else {
+                        $UserHash += @{
+                            SessionName = $User.SESSIONNAME
+                            SessionId   = $User.ID
+                            State       = $User.STATE
+                            IdleTime    = $User.'IDLE TIME'.replace('+', '.')
+                            LogonTime   = [datetime]$User.'LOGON TIME'
+                        }
+                    }
+
+                    $Duration = (New-TimeSpan -Start $UserHash.LogonTime -End $Time).ToString("dd\:hh\:mm")
+                    $UserHash += @{Duration = $Duration }
+                    [PSCustomObject]$UserHash
+                }
             }
         }
     }
+
+    end {}
 }
