@@ -1,7 +1,80 @@
 function Get-InstalledApplication {
-    [cmdletbinding(DefaultParameterSetName = 'GlobalAndAllUsers')]
+    <#
+    .SYNOPSIS
+    Retrieves a list of installed applications from the Windows registry
 
-    Param (
+    .DESCRIPTION
+    This function queries the Windows registry to retrieve information about installed applications.
+    It can gather applications installed globally (for all users) or for specific users by examining
+    the uninstall registry keys in HKEY_LOCAL_MACHINE and HKEY_USERS hives. The function supports
+    various parameter sets to control the scope of the search and includes information about whether
+    each application is installed globally or for specific users.
+
+    .NOTES
+    Name        : Get-InstalledApplication
+    Author      : Darren Hollinrake
+    Version     : 1.1
+    Date Created: 2022-05-27
+    Date Updated: 2025-11-11
+
+    .PARAMETER Global
+    Retrieves only applications installed globally (for all users) from HKEY_LOCAL_MACHINE registry.
+
+    .PARAMETER GlobalAndCurrentUser
+    Retrieves applications installed globally and for the current user.
+
+    .PARAMETER GlobalAndAllUsers
+    Retrieves applications installed globally and for all users on the system. Requires administrator privileges.
+
+    .PARAMETER CurrentUser
+    Retrieves only applications installed for the current user from HKEY_CURRENT_USER registry.
+
+    .PARAMETER AllUsers
+    Retrieves applications installed for all users on the system by examining all user profiles. Requires administrator privileges.
+
+    .EXAMPLE
+    Get-InstalledApplication
+
+    DisplayName                     DisplayVersion    InstallScope    InstallDate
+    -----------                     --------------    ------------    -----------
+    Visual Studio Community 2022    17.13.7          Global          20250422
+    Notepad++                       8.7.5            User            20231205
+    Microsoft Edge                  142.0.3595.76    Global          20251111
+
+    Retrieves all installed applications (global and all users) using the default parameter set.
+
+    .EXAMPLE
+    Get-InstalledApplication -Global
+
+    DisplayName                     DisplayVersion    InstallScope    InstallDate
+    -----------                     --------------    ------------    -----------
+    Visual Studio Community 2022    17.13.7          Global          20250422
+    Microsoft Edge                  142.0.3595.76    Global          20251111
+
+    Retrieves only applications installed globally for all users.
+
+    .EXAMPLE
+    Get-InstalledApplication -CurrentUser
+
+    DisplayName                     DisplayVersion    InstallScope    InstallDate
+    -----------                     --------------    ------------    -----------
+    Notepad++                       8.7.5            User            20231205
+    Steam                           2.10.91.91       User
+
+    Retrieves only applications installed for the current user.
+
+    .EXAMPLE
+    Get-InstalledApplication -AllUsers | Where-Object {$_.DisplayName -like "*Office*"}
+
+    DisplayName                     DisplayVersion    InstallScope    InstallDate
+    -----------                     --------------    ------------    -----------
+    Microsoft Office Professional  16.0.12345.67890 User            20240315
+
+    Retrieves all user-installed applications and filters for those containing "Office" in the name.
+
+    #>
+    [CmdletBinding(DefaultParameterSetName = 'GlobalAndAllUsers')]
+    param (
         [Parameter(ParameterSetName = "Global")]
         [switch]$Global,
         [Parameter(ParameterSetName = "GlobalAndCurrentUser")]
