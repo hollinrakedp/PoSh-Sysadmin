@@ -32,14 +32,24 @@ function Get-InstalledApplication {
 
     if ($Global -or $GlobalAndAllUsers -or $GlobalAndCurrentUser) {
         Write-Verbose "Processing Local Machine Registry"
-        $Apps += Get-ItemProperty "HKLM:\$32BitPath"
-        $Apps += Get-ItemProperty "HKLM:\$64BitPath"
+        $GlobalApps = @()
+        $GlobalApps += Get-ItemProperty "HKLM:\$32BitPath"
+        $GlobalApps += Get-ItemProperty "HKLM:\$64BitPath"
+        $GlobalApps | ForEach-Object {
+            $_ | Add-Member -NotePropertyName "InstallScope" -NotePropertyValue "Global" -Force
+        }
+        $Apps += $GlobalApps
     }
 
     if ($CurrentUser -or $GlobalAndCurrentUser) {
         Write-Verbose "Processing Current User Registry"
-        $Apps += Get-ItemProperty "HKCU:\$32BitPath"
-        $Apps += Get-ItemProperty "HKCU:\$64BitPath"
+        $CurrentUserApps = @()
+        $CurrentUserApps += Get-ItemProperty "HKCU:\$32BitPath"
+        $CurrentUserApps += Get-ItemProperty "HKCU:\$64BitPath"
+        $CurrentUserApps | ForEach-Object {
+            $_ | Add-Member -NotePropertyName "InstallScope" -NotePropertyValue "User" -Force
+        }
+        $Apps += $CurrentUserApps
     }
 
     if ($AllUsers -or $GlobalAndAllUsers) {
@@ -50,8 +60,13 @@ function Get-InstalledApplication {
 
         Write-Verbose "Processing mounted hives"
         $MountedProfiles | ForEach-Object {
-            $Apps += Get-ItemProperty -Path "Registry::\HKEY_USERS\$($_.SID)\$32BitPath"
-            $Apps += Get-ItemProperty -Path "Registry::\HKEY_USERS\$($_.SID)\$64BitPath"
+            $UserApps = @()
+            $UserApps += Get-ItemProperty -Path "Registry::\HKEY_USERS\$($_.SID)\$32BitPath"
+            $UserApps += Get-ItemProperty -Path "Registry::\HKEY_USERS\$($_.SID)\$64BitPath"
+            $UserApps | ForEach-Object {
+                $_ | Add-Member -NotePropertyName "InstallScope" -NotePropertyValue "User" -Force
+            }
+            $Apps += $UserApps
         }
 
         Write-Verbose "Processing unmounted hives"
@@ -61,22 +76,30 @@ function Get-InstalledApplication {
             Write-Verbose "Mounting hive at $Hive"
 
             if (Test-Path $Hive) {
-                REG LOAD HKU\temp $Hive
+                REG LOAD HKU\temp $Hive 2>$null | Out-Null
 
-                $Apps += Get-ItemProperty -Path "Registry::\HKEY_USERS\temp\$32BitPath"
-                $Apps += Get-ItemProperty -Path "Registry::\HKEY_USERS\temp\$64BitPath"
+                $UnmountedUserApps = @()
+                $UnmountedUserApps += Get-ItemProperty -Path "Registry::\HKEY_USERS\temp\$32BitPath"
+                $UnmountedUserApps += Get-ItemProperty -Path "Registry::\HKEY_USERS\temp\$64BitPath"
+                $UnmountedUserApps | ForEach-Object {
+                    $_ | Add-Member -NotePropertyName "InstallScope" -NotePropertyValue "User" -Force
+                }
+                $Apps += $UnmountedUserApps
 
                 # Run Garbage Collection
                 [GC]::Collect()
                 [GC]::WaitForPendingFinalizers()
-                REG UNLOAD HKU\temp
+                REG UNLOAD HKU\temp 2>$null | Out-Null
             }
             else {
                 Write-Warning "Unable to access registry hive at $Hive"
             }
         }
     }
-    $defaultDisplaySet = 'DisplayName', 'DisplayVersion', 'InstallDate'
+
+    $Apps = $Apps | Where-Object { -not [String]::IsNullOrEmpty($_.DisplayName) }
+
+    $defaultDisplaySet = 'DisplayName', 'DisplayVersion', 'InstallScope', 'InstallDate'
     $defaultDisplayPropertySet = New-Object System.Management.Automation.PSPropertySet('DefaultDisplayPropertySet', [string[]]$defaultDisplaySet)
     $PSStandardMembers = [System.Management.Automation.PSMemberInfo[]]@($defaultDisplayPropertySet)
     $Apps | Add-Member MemberSet PSStandardMembers $PSStandardMembers
