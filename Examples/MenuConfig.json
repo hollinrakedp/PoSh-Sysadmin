@@ -1,0 +1,48 @@
+{
+    "MenuBar": "=====================",
+    "SubMenuBar": "---------------------",
+    "MainMenu": [
+        {
+            "Option": "Option 1",
+            "SubMenu": [
+                {
+                    "Title": "Sub Option 1.1",
+                    "Action": "Write-Host 'Action for Sub Option 1.1'"
+                },
+                {
+                    "Title": "Sub Option 1.2",
+                    "Action": "Write-Host 'Action for Sub Option 1.2'"
+                }
+            ]
+        },
+        {
+            "Option": "Option 2",
+            "SubMenu": [
+                {
+                    "Title": "Sub Option 2.1",
+                    "Action": "Write-Host 'Action for Sub Option 2.1'"
+                },
+                {
+                    "Title": "Sub Option 2.2",
+                    "Action": "Write-Host 'Action for Sub Option 2.2'"
+                }
+            ]
+        },
+        {
+            "Option": "Option 3",
+            "SubMenu": [
+                {
+                    "Title": "Sub Option 3.1",
+                    "Action": "Write-Host 'Action for Sub Option 3.1'"
+                },
+                {
+                    "Title": "Sub Option 3.2",
+                    "Action": "Write-Host 'Action for Sub Option 3.2'"
+                }
+            ]
+        },
+        {
+            "Option": "Exit"
+        }
+    ]
+}
